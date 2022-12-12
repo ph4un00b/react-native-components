@@ -6,6 +6,7 @@ const nativewind = require("nativewind/tailwind/native")
 module.exports = {
   content: [
     "./App.{js,jsx,ts,tsx}",
+    "./shared/**/*.{js,ts,jsx,tsx}",
     "./screens/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
