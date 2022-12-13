@@ -1,8 +1,13 @@
 // import { StatusBar } from 'expo-status-bar';
 // import { Text, View, TouchableNativeFeedback, Alert } from 'react-native';
 import "./generated/nativewind-output";
-import { Voting } from './screens/Voting/Main';
+import { Main } from "./screens/Voting/Main";
+import { NativeRouter } from "react-router-native";
 
 export default function App() {
-  return <Voting />
+  return (
+    <NativeRouter>
+      <Main />
+    </NativeRouter>
+  );
 }
