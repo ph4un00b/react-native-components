@@ -1,7 +1,8 @@
 import React from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Route, Routes } from "react-router-native";
 import { AppBar } from "../../shared/components/AppBar";
+import { LoginPage } from "../Login/Login";
 import { List } from "./List";
 
 export function Main() {
@@ -28,11 +29,7 @@ export function Main() {
                 <Route path="/" element={<List />} />
                 <Route
                     path="/signin"
-                    element={
-                        <View>
-                            <Text>Working on it!</Text>
-                        </View>
-                    }
+                    element={<LoginPage />}
                 />
             </Routes>
         </SafeAreaView>
