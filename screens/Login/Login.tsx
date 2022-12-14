@@ -1,10 +1,11 @@
-import { Alert, Button, Text, TextInput, View } from "react-native";
+import { Button, GestureResponderEvent, Text, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { AppInput } from "../../shared/components/AppInput";
 import {
   AntDesign as AIcon,
   MaterialCommunityIcons as MIcon,
 } from "@expo/vector-icons";
+import { SubmitButton } from "../../shared/components/Button.submit";
 
 export function LoginPage() {
   const {
@@ -20,7 +21,7 @@ export function LoginPage() {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <View>
+    <View className="px-4">
       <Controller
         control={control}
         rules={{
@@ -51,28 +52,6 @@ export function LoginPage() {
         render={({ field: { onChange, onBlur, value } }) => (
           <AppInput
             leftIcon={<MIcon name="lock-open" size={44} color="white" />}
-            rightIcon={<AIcon name="cloudupload" size={44} color="white" />}
-            label={"password"}
-            name={"password"}
-            type={"secret"}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            placeholder={"passsswword"}
-          />
-        )}
-        name="password"
-      />
-
-      <Controller
-        control={control}
-        rules={{
-          maxLength: 16,
-          required: !true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <AppInput
-            leftIcon={<MIcon name="lock-open" size={44} color="white" />}
             showIcon={<MIcon name="eye" size={44} color="white" />}
             hideIcon={<MIcon name="eye-off" size={44} color="white" />}
             label={"password"}
@@ -89,7 +68,8 @@ export function LoginPage() {
 
       {errors.password && <Text>This is required.</Text>}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
+      <SubmitButton onPress={handleSubmit(onSubmit)}>Submit!</SubmitButton>
     </View>
   );
 }
