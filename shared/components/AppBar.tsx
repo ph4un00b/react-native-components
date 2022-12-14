@@ -1,7 +1,8 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Switch, Text, View } from "react-native";
 import { Link, useLocation } from "react-router-native";
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import { color } from "react-native-tailwindcss";
 
 type TabProps = { children: React.ReactNode; to: string };
 
@@ -9,8 +10,8 @@ function AppBarTab({ children, to }: TabProps) {
   const { pathname } = useLocation();
   const style =
     pathname == to
-      ? "px-3 text-xl font-bold capitalize text-slate-200"
-      : "px-3 text-xl font-bold capitalize text-slate-400";
+      ? "px-3 pt-2 text-xl font-bold capitalize text-slate-200"
+      : "px-3 pt-2 text-xl font-bold capitalize text-slate-400";
   return (
     <Link to={to}>
       <Text className={style}>{children}</Text>
@@ -19,12 +20,30 @@ function AppBarTab({ children, to }: TabProps) {
 }
 
 export function AppBar() {
+  const [switchVal, setSwitch] = useState(true);
+
+  const toggleSwitch = () => {
+    setSwitch((prev) => !prev);
+  };
+
   return (
     <>
       <StatusBar style="light" />
-      <View className="flex flex-row w-full pt-6 bg-slate-600">
-        <ScrollView horizontal className="pb-8">
-          <AppBarTab to="/">Voting system</AppBarTab>
+      <View className="flex flex-row w-full pt-4 bg-slate-600">
+        <ScrollView horizontal className="pb-4">
+          <View className="flex flex-row">
+            <Switch
+              trackColor={{ false: color.gray200, true: color.purple400 }}
+              thumbColor={color.gray100}
+              ios_backgroundColor={color.gray800}
+              onValueChange={toggleSwitch}
+              value={switchVal}
+            />
+            <Text className="pt-2 pl-1 pr-3 text-xl font-bold capitalize text-slate-200">
+              on/off
+            </Text>
+          </View>
+          <AppBarTab to="/">Voting</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>
           <AppBarTab to="/test">test text to large</AppBarTab>
           <AppBarTab to="/test">test text to large</AppBarTab>

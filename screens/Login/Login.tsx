@@ -1,7 +1,8 @@
-import { Button, GestureResponderEvent, Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { AppInput } from "../../shared/components/AppInput";
 import {
+  /** @see https://icons.expo.fyi/ */
   AntDesign as AIcon,
   MaterialCommunityIcons as MIcon,
 } from "@expo/vector-icons";
@@ -25,7 +26,7 @@ export function LoginPage() {
       <Controller
         control={control}
         rules={{
-          required: !true,
+          required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <AppInput
@@ -41,13 +42,14 @@ export function LoginPage() {
         )}
         name="email"
       />
-      {errors.email && <Text>This is required.</Text>}
+
+      {errors.email && <Text className="text-rose-700">This is required.</Text>}
 
       <Controller
         control={control}
         rules={{
           maxLength: 16,
-          required: !true,
+          required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <AppInput
@@ -66,7 +68,9 @@ export function LoginPage() {
         name="password"
       />
 
-      {errors.password && <Text>This is required.</Text>}
+      {errors.password && (
+        <Text className="text-rose-700">This is required.</Text>
+      )}
 
       {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
       <SubmitButton onPress={handleSubmit(onSubmit)}>Submit!</SubmitButton>
