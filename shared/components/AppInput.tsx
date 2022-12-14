@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import {
   Text,
   TextInput,
@@ -24,6 +25,8 @@ type InputProps = {
   onChange: (text: string) => void;
   onBlur: () => void;
   placeholder: string;
+  error?: any;
+  errorText?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
 } & TextInputProps;
 
 export function AppInput({
@@ -42,24 +45,29 @@ export function AppInput({
   value,
   onChange,
   onBlur,
+  error,
+  errorText,
 }: InputProps) {
   const [hideSecret, setHideSecret] = useState(true);
   const [extraStyles, setExtraStyles] = useState("bg-sky-500");
+  console.log({ errorText });
   return (
     <>
       <Text className="pl-1.5 capitalize block text-sm font-medium text-gray-700">
         {label}
       </Text>
+
       <View>
         <View className="absolute z-10 pr-4 border-r-2 top-7 left-4 border-slate-300">
           {leftIcon}
         </View>
 
-        <View className="flex flex-row w-full py-4">
+        <View className="flex flex-row w-full pt-4">
           <TextInput
             className={
               extraStyles +
-              " shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg border-slate-200"
+              " shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg " +
+              (error ? "border-purple-400" : "border-slate-200")
             }
             placeholder={placeholder}
             onFocus={() => {
@@ -91,6 +99,10 @@ export function AppInput({
           </TouchableOpacity>
         )}
       </View>
+
+      {errorText && (
+        <Text className="text-right text-purple-600">{errorText.toString()}</Text>
+      )}
     </>
   );
 }

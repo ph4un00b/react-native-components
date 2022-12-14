@@ -7,6 +7,13 @@ import {
   MaterialCommunityIcons as MIcon,
 } from "@expo/vector-icons";
 import { SubmitButton } from "../../shared/components/Button.submit";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const Form = z.object({
+  email: z.string().max(256).min(4).email(),
+  password: z.string().max(256).min(8),
+});
 
 export function LoginPage() {
   const {
@@ -14,10 +21,7 @@ export function LoginPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    resolver: zodResolver(Form),
   });
   const onSubmit = (data: any) => console.log(data);
 
@@ -25,9 +29,6 @@ export function LoginPage() {
     <View className="px-4">
       <Controller
         control={control}
-        rules={{
-          required: true,
-        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <AppInput
             leftIcon={<AIcon name="cloudupload" size={44} color="white" />}
@@ -38,19 +39,17 @@ export function LoginPage() {
             onChange={onChange}
             onBlur={onBlur}
             placeholder={"email"}
+            error={errors.email}
+            errorText={errors.email?.message}
           />
         )}
         name="email"
       />
 
-      {errors.email && <Text className="text-rose-700">This is required.</Text>}
+      {/* {errors.email && <Text className="text-rose-700">This is required.</Text>} */}
 
       <Controller
         control={control}
-        rules={{
-          maxLength: 16,
-          required: true,
-        }}
         render={({ field: { onChange, onBlur, value } }) => (
           <AppInput
             leftIcon={<MIcon name="lock-open" size={44} color="white" />}
@@ -63,15 +62,14 @@ export function LoginPage() {
             onChange={onChange}
             onBlur={onBlur}
             placeholder={"passssword"}
+            error={errors.password}
+            errorText={errors.password?.message}
           />
         )}
         name="password"
       />
 
-      {errors.password && (
-        <Text className="text-rose-700">This is required.</Text>
-      )}
-
+      {/* {errors.password && <Text className="text-rose-500">Required</Text>} */}
       {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
       <SubmitButton onPress={handleSubmit(onSubmit)}>Submit!</SubmitButton>
     </View>
