@@ -26,7 +26,7 @@ type InputProps = {
   onBlur: () => void;
   placeholder: string;
   error?: any;
-  errorText?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
+  errorText?: string;
 } & TextInputProps;
 
 export function AppInput({

@@ -3,11 +3,16 @@
 import "./generated/nativewind-output";
 import { Main } from "./screens/Voting/Main";
 import { NativeRouter } from "react-router-native";
+/** ensure that appropriate event handlers are registered with React Native */
+import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
   return (
-    <NativeRouter>
-      <Main />
-    </NativeRouter>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NativeRouter>
+        <Main />
+      </NativeRouter>
+    </GestureHandlerRootView>
   );
 }

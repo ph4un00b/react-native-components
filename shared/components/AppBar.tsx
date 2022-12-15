@@ -43,9 +43,12 @@ export function AppBar() {
               on/off
             </Text>
           </View>
+          {/* TODO: automate links agregation */}
           <AppBarTab to="/">Voting</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>
-          <AppBarTab to="/test">test text to large</AppBarTab>
+          <AppBarTab to="/swipe-inside">swipe-inside</AppBarTab>
+          <AppBarTab to="/swipe-class">swipe-class</AppBarTab>
+          <AppBarTab to="/swipe-outside">swipe-outside</AppBarTab>
           <AppBarTab to="/test">test text to large</AppBarTab>
           <AppBarTab to="/test">test text to large</AppBarTab>
           <AppBarTab to="/test">test text to large</AppBarTab>

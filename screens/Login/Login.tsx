@@ -40,7 +40,7 @@ export function LoginPage() {
             onBlur={onBlur}
             placeholder={"email"}
             error={errors.email}
-            errorText={errors.email?.message}
+            errorText={errors.email?.message?.toString()}
           />
         )}
         name="email"
@@ -63,7 +63,7 @@ export function LoginPage() {
             onBlur={onBlur}
             placeholder={"passssword"}
             error={errors.password}
-            errorText={errors.password?.message}
+            errorText={errors.password?.message?.toString()}
           />
         )}
         name="password"

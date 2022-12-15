@@ -27,7 +27,7 @@ export function Item({
   console.log("<item> "+itemId, isSelected);
   const bgStyles = `${
     isSelected ? "bg-purple-800" : "bg-blue-200"
-  } p-8 my-4 mx-4`;
+  } p-8 my-4 w-full`;
   const textStyles = `${
     isSelected ? "text-white" : "text-black"
   } text-2xl pt-4`;
@@ -41,10 +41,10 @@ export function Item({
        * @see https://reactnative.dev/docs/image
        */}
       <Image
-        className="w-24 h-24 bg-black rounded-md"
-        resizeMode="contain"
+        className="w-full h-[250px] bg-black rounded-md"
+        resizeMode="cover"
         fadeDuration={1000}
-        blurRadius={6}
+        blurRadius={3}
         source={{ uri: itemUrl }}
       />
       <Text className={textStyles}>{itemTitle}</Text>
