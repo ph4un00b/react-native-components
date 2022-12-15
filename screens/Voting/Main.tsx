@@ -5,6 +5,7 @@ import { AppBar } from "../../shared/components/AppBar";
 import { LoginPage } from "../Login/Login";
 import { ClassSwipableListPage } from "./ClassSwipableList";
 import { ListPage } from "./List";
+import { SimpleSwipeListPage } from "./SimpleSwipableList";
 import { SwipeListInsidePage } from "./SwipableListInside";
 import { SwipeListPage } from "./SwipeList";
 
@@ -28,6 +29,7 @@ export function Main() {
        */}
       <Routes>
         <Route path="/" element={<ListPage />} />
+        <Route path="/swipe-simple" element={<SimpleSwipeListPage />} />
         <Route path="/swipe-inside" element={<SwipeListInsidePage />} />
         <Route path="/swipe-class" element={<ClassSwipableListPage />} />
         <Route path="/swipe-outside" element={<SwipeListPage />} />

@@ -46,6 +46,7 @@ export function AppBar() {
           {/* TODO: automate links agregation */}
           <AppBarTab to="/">Voting</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>
+          <AppBarTab to="/swipe-simple">swipe-simple</AppBarTab>
           <AppBarTab to="/swipe-inside">swipe-inside</AppBarTab>
           <AppBarTab to="/swipe-class">swipe-class</AppBarTab>
           <AppBarTab to="/swipe-outside">swipe-outside</AppBarTab>

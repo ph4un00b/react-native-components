@@ -18,6 +18,12 @@ type ItemProps = {
   itemTitle: string;
   onPress: (event: GestureResponderEvent) => void;
   isSelected: boolean;
+  actions?: (
+    // progress: Animated.AnimatedInterpolation,
+    progress: any,
+    // _dragAnimatedValue: Animated.AnimatedInterpolation
+    _dragAnimatedValue: any
+  ) => React.ReactNode
 };
 
 const styles = StyleSheet.create({
@@ -68,7 +74,7 @@ const renderRightAction = (
   );
 };
 
-const renderRightActions = (
+const testActions = (
   // progress: Animated.AnimatedInterpolation,
   progress: any,
   // _dragAnimatedValue: Animated.AnimatedInterpolation
@@ -92,11 +98,12 @@ export function SwipableItem({
   itemTitle,
   onPress,
   isSelected,
+  actions
 }: ItemProps) {
   const [vote, setVote] = useState(0);
   console.log("<item> " + itemId, isSelected);
   const bgStyles = `${
-    isSelected ? "bg-purple-800" : "bg-green-200"
+    isSelected ? "bg-purple-800" : "bg-blue-800"
   } p-8 my-4 w-full`;
   const textStyles = `${
     isSelected ? "text-white" : "text-black"
@@ -123,7 +130,7 @@ export function SwipableItem({
   );
 
   return (
-    <Swipeable renderRightActions={renderRightActions}>
+    <Swipeable renderRightActions={actions || testActions}>
       <TouchableNativeFeedback key={itemTitle} onPress={onPress}>
         {Card}
       </TouchableNativeFeedback>

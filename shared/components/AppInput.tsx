@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 import {
   Text,
   TextInput,
@@ -101,7 +100,9 @@ export function AppInput({
       </View>
 
       {errorText && (
-        <Text className="text-right text-purple-600">{errorText.toString()}</Text>
+        <Text className="text-right text-purple-600">
+          {errorText.toString()}
+        </Text>
       )}
     </>
   );
