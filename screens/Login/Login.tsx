@@ -26,7 +26,7 @@ export function LoginPage() {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <View className="px-4">
+    <View className="flex flex-1 px-4">
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
