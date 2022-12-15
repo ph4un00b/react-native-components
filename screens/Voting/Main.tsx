@@ -11,7 +11,7 @@ import { SwipeListPage } from "./SwipeList";
 
 export function Main() {
   return (
-    <SafeAreaView className="items-center justify-center flex-1 bg-blue-400">
+    <SafeAreaView className="flex items-center justify-center flex-1 bg-blue-400">
       <AppBar />
       {/**
        * All <Route>s and <Link>s inside a <Routes> are relative.
