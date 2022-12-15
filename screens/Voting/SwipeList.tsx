@@ -92,7 +92,7 @@ export function SwipeListPage() {
         <MemoItem
           itemId={item.id}
           itemTitle={item.title}
-          itemUrl={item.photoUrL}
+          imageUrl={item.photoUrL}
           onPress={() => setSelectedId(item.id)}
           isSelected={item.id == selectedId}
         />

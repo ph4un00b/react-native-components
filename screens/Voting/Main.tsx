@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { Route, Routes } from "react-router-native";
 import { AppBar } from "../../shared/components/AppBar";
+import { MenuPage } from "../Indexes/Menu";
 import { LoginPage } from "../Login/Login";
 import { ClassSwipableListPage } from "./ClassSwipableList";
 import { ListPage } from "./List";
@@ -28,7 +29,8 @@ export function Main() {
        * @see https://reactrouter.com/en/6.4.5/upgrading/v5#upgrade-all-switch-elements-to-routes
        */}
       <Routes>
-        <Route path="/" element={<ListPage />} />
+        <Route path="/" element={<MenuPage />} />
+        <Route path="/list" element={<ListPage />} />
         <Route path="/swipe-simple" element={<SimpleSwipeListPage />} />
         <Route path="/swipe-inside" element={<SwipeListInsidePage />} />
         <Route path="/swipe-class" element={<ClassSwipableListPage />} />

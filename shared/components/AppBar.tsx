@@ -1,4 +1,4 @@
-import { ScrollView, Switch, Text, View } from "react-native";
+import { ScrollView, Switch, Text, View, PlatformConstants } from "react-native";
 import { Link, useLocation } from "react-router-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -29,7 +29,7 @@ export function AppBar() {
   return (
     <>
       <StatusBar style="light" />
-      <View className="flex flex-row w-full pt-4 bg-slate-600">
+      <View className="flex flex-row w-full bg-slate-600" style={{paddingTop: 4}}>
         <ScrollView horizontal className="pb-4">
           <View className="flex flex-row">
             <Switch
@@ -44,7 +44,8 @@ export function AppBar() {
             </Text>
           </View>
           {/* TODO: automate links agregation */}
-          <AppBarTab to="/">Voting</AppBarTab>
+          <AppBarTab to="/">Options</AppBarTab>
+          <AppBarTab to="/list">list</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>
           <AppBarTab to="/swipe-simple">swipe-simple</AppBarTab>
           <AppBarTab to="/swipe-inside">swipe-inside</AppBarTab>
