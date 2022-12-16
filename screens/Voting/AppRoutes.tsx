@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { Route, Routes } from "react-router-native";
 import { AppBar } from "../../shared/components/AppBar";
+import { ListingPage } from "../Indexes/Listing";
 import { MenuPage } from "../Indexes/Menu";
 import { LoginPage } from "../Login/Login";
 import { ClassSwipableListPage } from "./ClassSwipableList";
@@ -10,7 +11,7 @@ import { SimpleSwipeListPage } from "./SimpleSwipableList";
 import { SwipeListInsidePage } from "./SwipableListInside";
 import { SwipeListPage } from "./SwipeList";
 
-export function Main() {
+export function AppRoutes() {
   return (
     <SafeAreaView className="flex items-center justify-center flex-1 bg-blue-400">
       <AppBar />
@@ -30,6 +31,7 @@ export function Main() {
        */}
       <Routes>
         <Route path="/" element={<MenuPage />} />
+        <Route path="/listing" element={<ListingPage />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/swipe-simple" element={<SimpleSwipeListPage />} />
         <Route path="/swipe-inside" element={<SwipeListInsidePage />} />

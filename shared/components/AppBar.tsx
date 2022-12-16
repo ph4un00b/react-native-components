@@ -1,8 +1,15 @@
-import { ScrollView, Switch, Text, View, PlatformConstants } from "react-native";
+import {
+  PlatformConstants,
+  ScrollView,
+  Switch,
+  Text,
+  View,
+} from "react-native";
 import { Link, useLocation } from "react-router-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { color } from "react-native-tailwindcss";
+import { RowItem } from "./ListItem.android";
 
 type TabProps = { children: React.ReactNode; to: string };
 
@@ -27,9 +34,12 @@ export function AppBar() {
   };
 
   return (
-    <>
+    <View className="flex flex-col w-full">
       <StatusBar style="light" />
-      <View className="flex flex-row w-full bg-slate-600" style={{paddingTop: 4}}>
+      <View
+        className="flex flex-row w-full bg-slate-600"
+        style={{ paddingTop: 4 }}
+      >
         <ScrollView horizontal className="pb-4">
           <View className="flex flex-row">
             <Switch
@@ -44,7 +54,8 @@ export function AppBar() {
             </Text>
           </View>
           {/* TODO: automate links agregation */}
-          <AppBarTab to="/">Options</AppBarTab>
+          <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/listing">listing</AppBarTab>
           <AppBarTab to="/list">list</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>
           <AppBarTab to="/swipe-simple">swipe-simple</AppBarTab>
@@ -56,12 +67,26 @@ export function AppBar() {
           <AppBarTab to="/test">test text to large</AppBarTab>
         </ScrollView>
       </View>
+
       <View>
         <Text className="text-slate-200" numberOfLines={1}>
           A very long and text let see what happens over here!, let's add a bit
           more text
         </Text>
       </View>
-    </>
+
+      {/* ads */}
+      <View>
+        <RowItem
+          imageUrl="https://placekitten.com/300/300"
+          itemTitle={"Ads"}
+          isSelected={true}
+        >
+          <Text className="text-slate-200">
+            How to Create Apple TV Application with React Native
+          </Text>
+        </RowItem>
+      </View>
+    </View>
   );
 }

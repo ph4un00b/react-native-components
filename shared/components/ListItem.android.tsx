@@ -89,7 +89,7 @@ export function RowItem({
         : "text-white"
       : notSelectedTitleColor
       ? notSelectedTitleColor
-      : "text-black") + " text-xl";
+      : "text-black") + " text-xl w-[220px]";
 
   const Card = (
     <View className={bgStyles}>
@@ -99,6 +99,7 @@ export function RowItem({
        * fadeDuration - android only!
        * @see https://reactnative.dev/docs/image
        */}
+
       {itemUrl && (
         <Image
           className="w-[100px] h-[100px] bg-black rounded-xl shadow-sm"
@@ -135,3 +136,4 @@ const areEqual = (prevProps: any, nextProps: any) => {
 };
 
 export const MemoItem = React.memo(Item, areEqual);
+export const MemoRowItem = React.memo(RowItem, areEqual);

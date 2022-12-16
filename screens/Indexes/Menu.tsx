@@ -39,18 +39,6 @@ const menuItems = [
 export function MenuPage() {
   return (
     <View className="flex flex-1 w-full bg-gray-800">
-      <View>
-        <RowItem
-          imageUrl="https://placekitten.com/300/300"
-          itemTitle={"jamon"}
-          isSelected={true}
-        >
-          <Text className="text-slate-200">
-            How to Create Apple TV Application with React Native
-          </Text>
-        </RowItem>
-      </View>
-
       <View className="mt-6">
         <FlatList
           data={menuItems}
