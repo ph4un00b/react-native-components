@@ -17,6 +17,7 @@ const Form = z.object({
   email: z.string().max(256).min(4).email(),
   password: z.string().max(256).min(8),
 });
+
 const Item: any = Picker.Item;
 export function LoginPage() {
   const [selectedLanguage, setSelectedLanguage] = useState();
@@ -34,7 +35,10 @@ export function LoginPage() {
     <View className="flex flex-1 px-4">
       {/** @see https://github.com/react-native-picker/picker */}
       {/* <Picker className="shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg" */}
-      <View className="bg-black">
+      <View className="py-2">
+        <Text className="pl-1.5 pb-3 capitalize block text-sm font-medium text-slate-200">
+          picker
+        </Text>
         <Picker
           accessibilityLabel="Basic Picker Accessibility Label"
           style={{

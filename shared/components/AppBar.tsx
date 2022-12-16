@@ -1,10 +1,5 @@
-import {
-  PlatformConstants,
-  ScrollView,
-  Switch,
-  Text,
-  View,
-} from "react-native";
+import { ScrollView, Switch, Text, View } from "react-native";
+import Constants from "expo-constants";
 import { Link, useLocation } from "react-router-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -38,9 +33,12 @@ export function AppBar() {
       <StatusBar style="light" />
       <View
         className="flex flex-row w-full bg-slate-600"
-        style={{ paddingTop: 4 }}
+        style={{ paddingTop: Constants.statusBarHeight }}
       >
-        <ScrollView horizontal className="pb-4">
+        <ScrollView
+          horizontal
+          style={{ paddingBottom: Constants.statusBarHeight * 0.5 }}
+        >
           <View className="flex flex-row">
             <Switch
               trackColor={{ false: color.gray200, true: color.purple400 }}
@@ -55,6 +53,7 @@ export function AppBar() {
           </View>
           {/* TODO: automate links agregation */}
           <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/drawer">drawer</AppBarTab>
           <AppBarTab to="/listing">listing</AppBarTab>
           <AppBarTab to="/list">list</AppBarTab>
           <AppBarTab to="/signin">sign in</AppBarTab>

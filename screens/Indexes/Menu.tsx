@@ -1,7 +1,7 @@
 import { Button, FlatList, Text, View } from "react-native";
 import { AppIcon } from "../../shared/components/AppIcon";
 import { color } from "react-native-tailwindcss";
-import { RowItem } from "../../shared/components/ListItem.android";
+import { RowItem } from "../../shared/components/ListItem";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 const iconSize = 50;

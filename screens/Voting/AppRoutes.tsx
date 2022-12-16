@@ -5,6 +5,7 @@ import { AppBar } from "../../shared/components/AppBar";
 import { ListingPage } from "../Indexes/Listing";
 import { MenuPage } from "../Indexes/Menu";
 import { LoginPage } from "../Login/Login";
+import { DrawerPage } from "../UX/Drawer";
 import { ClassSwipableListPage } from "./ClassSwipableList";
 import { ListPage } from "./List";
 import { SimpleSwipeListPage } from "./SimpleSwipableList";
@@ -13,7 +14,7 @@ import { SwipeListPage } from "./SwipeList";
 
 export function AppRoutes() {
   return (
-    <SafeAreaView className="flex items-center justify-center flex-1 bg-blue-400">
+    <SafeAreaView className="flex items-center justify-center flex-1 bg-slate-800">
       <AppBar />
       {/**
        * All <Route>s and <Link>s inside a <Routes> are relative.
@@ -31,6 +32,7 @@ export function AppRoutes() {
        */}
       <Routes>
         <Route path="/" element={<MenuPage />} />
+        <Route path="/drawer" element={<DrawerPage />} />
         <Route path="/listing" element={<ListingPage />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/swipe-simple" element={<SimpleSwipeListPage />} />

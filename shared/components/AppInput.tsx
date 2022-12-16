@@ -52,7 +52,7 @@ export function AppInput({
   console.log({ errorText });
   return (
     <>
-      <Text className="pl-1.5 capitalize block text-sm font-medium text-gray-700">
+      <Text className="pl-1.5 capitalize block text-sm font-medium text-slate-200">
         {label}
       </Text>
 
@@ -61,7 +61,7 @@ export function AppInput({
           {leftIcon}
         </View>
 
-        <View className="flex flex-row w-full pt-4">
+        <View className="flex flex-row w-full pt-3">
           <TextInput
             // only ios
             clearButtonMode="always"
