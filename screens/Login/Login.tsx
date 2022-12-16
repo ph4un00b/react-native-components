@@ -9,13 +9,18 @@ import {
 import { SubmitButton } from "../../shared/components/Button.submit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Picker } from "@react-native-picker/picker";
+import { useState } from "react";
+import { color } from "react-native-tailwindcss";
 
 const Form = z.object({
   email: z.string().max(256).min(4).email(),
   password: z.string().max(256).min(8),
 });
-
+const Item: any = Picker.Item;
 export function LoginPage() {
+  const [selectedLanguage, setSelectedLanguage] = useState();
+
   const {
     control,
     handleSubmit,
@@ -27,6 +32,53 @@ export function LoginPage() {
 
   return (
     <View className="flex flex-1 px-4">
+      {/** @see https://github.com/react-native-picker/picker */}
+      {/* <Picker className="shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg" */}
+      <View className="bg-black">
+        <Picker
+          accessibilityLabel="Basic Picker Accessibility Label"
+          style={{
+            borderColor: color.orange200,
+            backgroundColor: color.gray700,
+            borderRadius: 8,
+            borderWidth: 2,
+            fontSize: 20,
+            height: 64,
+          }}
+          dropdownIconColor={color.gray200}
+          dropdownIconRippleColor="purple"
+          mode="dialog"
+          prompt="Pick one, just one"
+          selectedValue={selectedLanguage}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedLanguage(itemValue)
+          }
+        >
+          <Item label="red" color="red" style={{ color: "red" }} value="red" />
+          <Item
+            label="Sin"
+            value="key0"
+            enabled={false}
+            style={{ backgroundColor: color.gray600, color: color.gray200 }}
+          />
+          <Item
+            label="Cos"
+            value="key1"
+            color={color.gray200}
+            style={{ backgroundColor: color.gray600, fontSize: 20 }}
+          />
+          <Item
+            label="Tan"
+            value="key2"
+            style={{
+              backgroundColor: color.gray600,
+              fontFamily: "serif",
+              color: color.gray200,
+            }}
+          />
+        </Picker>
+      </View>
+
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (

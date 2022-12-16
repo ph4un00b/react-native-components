@@ -63,6 +63,8 @@ export function AppInput({
 
         <View className="flex flex-row w-full pt-4">
           <TextInput
+            // only ios
+            clearButtonMode="always"
             className={
               extraStyles +
               " shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg " +
