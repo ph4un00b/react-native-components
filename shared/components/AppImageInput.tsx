@@ -18,8 +18,6 @@ export function AppImageInput({
   imageUri,
   onChangeImage: onChangeFn,
 }: ImageInputProps) {
-  const [localImage, setLocalImage] = useState<string>();
-
   useEffect(() => {
     requestPermission();
     return () => {};
@@ -31,12 +29,12 @@ export function AppImageInput({
    */
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
-      <View className="flex items-center justify-center w-1/3 overflow-hidden rounded-md shadow-sm aspect-square bg-slate-700">
-        {!localImage && (
+      <View className="flex items-center justify-center w-[100px] h-[100px] overflow-hidden rounded-md shadow-sm bg-slate-700">
+        {!imageUri && (
           <FontAwesome5 name="camera-retro" size={44} color={color.gray300} />
         )}
-        {localImage && (
-          <Image className="w-full h-full" source={{ uri: localImage }} />
+        {imageUri && (
+          <Image className="w-full h-full" source={{ uri: imageUri }} />
         )}
       </View>
     </TouchableWithoutFeedback>
@@ -44,7 +42,7 @@ export function AppImageInput({
 
   function handlePress() {
     console.log("presssed?");
-    if (!localImage) {
+    if (!imageUri) {
       selectImage();
     } else {
       Alert.alert("Delete", "Are you sure you want to delete the image?", [
@@ -52,7 +50,6 @@ export function AppImageInput({
           text: "Yes",
           onPress: () => {
             onChangeFn?.(undefined);
-            setLocalImage(undefined);
           },
         },
         { text: "No" },
@@ -71,7 +68,6 @@ export function AppImageInput({
       if (!res.canceled) {
         console.log({ uri: res.assets[0].uri });
         onChangeFn?.(res.assets[0].uri);
-        setLocalImage(res.assets[0].uri);
       }
     } catch (error) {
       console.error("error reading an image", error);

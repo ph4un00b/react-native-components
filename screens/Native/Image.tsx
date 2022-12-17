@@ -6,6 +6,7 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { AppImageInput } from "../../shared/components/AppImageInput";
+import { AppImageMultipleInput } from "../../shared/components/AppImageMultipleInput";
 
 const iconSize = 50;
 const menuItems = [
@@ -45,7 +46,10 @@ async function requestPermission() {
 }
 
 export function NativeImagePage() {
-  const [mainImageUri, setMainImageUri] = useState<string | undefined>(undefined);
+  const [mainImageUri, setMainImageUri] = useState<string | undefined>(
+    undefined
+  );
+  const [imagesUris, setImageUris] = useState<string[]>([]);
 
   useEffect(() => {
     requestPermission();
@@ -96,9 +100,20 @@ export function NativeImagePage() {
 
               <View className="flex flex-col">
                 <Text className="text-slate-300">on-change</Text>
-                <AppImageInput onChangeImage={(uri) => setMainImageUri(uri)} />
-                <Text className="text-slate-300">solo</Text>
-                <AppImageInput />
+                <AppImageInput
+                  imageUri={mainImageUri}
+                  onChangeImage={(uri) => setMainImageUri(uri)}
+                />
+              </View>
+
+              <Text className="text-slate-300">multiple</Text>
+              <View className="flex flex-row flex-wrap">
+                {/* todo: fix 2 lines issue */}
+                <AppImageMultipleInput
+                  uris={imagesUris}
+                  onRemoveImage={handleRemoveImage}
+                  onAddImage={handleAddImage}
+                />
               </View>
 
               <View className="mt-4">
@@ -124,4 +139,12 @@ export function NativeImagePage() {
       </View>
     </View>
   );
+
+  function handleAddImage(uri: string) {
+    setImageUris([...imagesUris, uri]);
+  }
+
+  function handleRemoveImage(uri: string) {
+    setImageUris(imagesUris.filter((pUri) => pUri != uri));
+  }
 }
