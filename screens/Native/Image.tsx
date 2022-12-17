@@ -5,6 +5,7 @@ import { RowItem } from "../../shared/components/ListItem";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
+import { AppImageInput } from "../../shared/components/AppImageInput";
 
 const iconSize = 50;
 const menuItems = [
@@ -44,7 +45,7 @@ async function requestPermission() {
 }
 
 export function NativeImagePage() {
-  const [imageUri, setImageUri] = useState<string>(null!);
+  const [mainImageUri, setMainImageUri] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     requestPermission();
@@ -53,10 +54,15 @@ export function NativeImagePage() {
 
   async function selectImage() {
     try {
-      const res = await ImagePicker.launchImageLibraryAsync();
+      const res = await ImagePicker.launchImageLibraryAsync({
+        // only images
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        // for upload
+        quality: 0.5,
+      });
       if (!res.canceled) {
         console.log({ uri: res.assets[0].uri });
-        setImageUri(res.assets[0].uri);
+        setMainImageUri(res.assets[0].uri);
       }
     } catch (error) {
       console.error("error reading an image", error);
@@ -81,12 +87,19 @@ export function NativeImagePage() {
           ListFooterComponent={
             <>
               <Button title="Select Image" onPress={selectImage} />
-              {imageUri && (
+              {mainImageUri && (
                 <Image
                   className="w-[200px] h-[200px]"
-                  source={{ uri: imageUri }}
+                  source={{ uri: mainImageUri }}
                 />
               )}
+
+              <View className="flex flex-col">
+                <Text className="text-slate-300">on-change</Text>
+                <AppImageInput onChangeImage={(uri) => setMainImageUri(uri)} />
+                <Text className="text-slate-300">solo</Text>
+                <AppImageInput />
+              </View>
 
               <View className="mt-4">
                 <RowItem

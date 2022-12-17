@@ -10,6 +10,7 @@ import { AppSearch } from "./AppSearch";
 type TabProps = { children: React.ReactNode; to: string };
 
 function AppBarTab({ children, to }: TabProps) {
+  console.log('chaging to', to)
   const { pathname } = useLocation();
   const style =
     pathname == to
