@@ -5,6 +5,7 @@ import { AppBar } from "../../shared/components/AppBar";
 import { ListingPage } from "../Indexes/Listing";
 import { MenuPage } from "../Indexes/Menu";
 import { LoginPage } from "../Login/Login";
+import { NativeImagePage } from "../Native/Image";
 import { DrawerPage } from "../UX/Drawer";
 import { ClassSwipableListPage } from "./ClassSwipableList";
 import { ListPage } from "./List";
@@ -33,6 +34,7 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<MenuPage />} />
         <Route path="/drawer" element={<DrawerPage />} />
+        <Route path="/native-image" element={<NativeImagePage />} />
         <Route path="/listing" element={<ListingPage />} />
         <Route path="/list" element={<ListPage />} />
         <Route path="/swipe-simple" element={<SimpleSwipeListPage />} />

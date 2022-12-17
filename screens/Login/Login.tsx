@@ -1,4 +1,4 @@
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { AppInput } from "../../shared/components/AppInput";
 import {
@@ -32,7 +32,7 @@ export function LoginPage() {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <View className="flex flex-1 px-4">
+    <ScrollView className="flex flex-1 px-4">
       {/** @see https://github.com/react-native-picker/picker */}
       {/* <Picker className="shadow-sm w-full h-16 text-xl pl-[90px] pr-16 my-1 mb-2 border-2 rounded-lg" */}
       <View className="py-2">
@@ -128,6 +128,6 @@ export function LoginPage() {
       {/* {errors.password && <Text className="text-rose-500">Required</Text>} */}
       {/* <Button title="Submit" onPress={handleSubmit(onSubmit)} /> */}
       <SubmitButton onPress={handleSubmit(onSubmit)}>Submit!</SubmitButton>
-    </View>
+    </ScrollView>
   );
 }

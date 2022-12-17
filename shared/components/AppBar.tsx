@@ -4,7 +4,8 @@ import { Link, useLocation } from "react-router-native";
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { color } from "react-native-tailwindcss";
-import { RowItem } from "./ListItem.android";
+import { RowItem } from "./ListItem";
+import { AppSearch } from "./AppSearch";
 
 type TabProps = { children: React.ReactNode; to: string };
 
@@ -53,6 +54,7 @@ export function AppBar() {
           </View>
           {/* TODO: automate links agregation */}
           <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/native-image">image</AppBarTab>
           <AppBarTab to="/drawer">drawer</AppBarTab>
           <AppBarTab to="/listing">listing</AppBarTab>
           <AppBarTab to="/list">list</AppBarTab>
@@ -86,6 +88,7 @@ export function AppBar() {
           </Text>
         </RowItem>
       </View>
+      <AppSearch />
     </View>
   );
 }

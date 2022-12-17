@@ -9,12 +9,15 @@ export function DrawerPage() {
   return (
     <View className="flex flex-1 w-full bg-gray-800">
       <DrawerLayout
+        // ios only
+        enableTrackpadTwoFingerGesture
+        edgeWidth={200}
         drawerWidth={200}
         drawerPosition={I18nManager.isRTL ? "right" : "left"}
         drawerType="front"
         drawerBackgroundColor={color.gray800}
         renderNavigationView={() => (
-          <View>
+          <View className="flex items-center justify-center flex-1">
             <Text className="text-slate-200">I am in the drawer!</Text>
           </View>
         )}
