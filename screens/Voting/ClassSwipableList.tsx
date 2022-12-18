@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, I18nManager, Alert } from 'react-native';
 
 import { FlatList, RectButton } from 'react-native-gesture-handler';
-import AppleStyleSwipeableRow from '../../shared/components/AppleSwipable';
-import GmailStyleSwipeableRow from '../../shared/components/GmailSwipable';
+import AppleStyleSwipeableRow from '../../packages/mochilita/nativewind/AppleSwipable';
+import GmailStyleSwipeableRow from '../../packages/mochilita/nativewind/GmailSwipable';
 
 //  To toggle LTR/RTL change to `true`
 I18nManager.allowRTL(false);

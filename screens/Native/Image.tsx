@@ -1,12 +1,12 @@
 import { Alert, Button, FlatList, Text, View, Image } from "react-native";
-import { AppIcon } from "../../shared/components/AppIcon";
+import { AppIcon } from "../../packages/mochilita/nativewind/AppIcon";
 import { color } from "react-native-tailwindcss";
-import { RowItem } from "../../shared/components/ListItem";
+import { RowItem } from "../../packages/mochilita/nativewind/ListItem";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { useEffect, useState } from "react";
-import { AppImageInput } from "../../shared/components/AppImageInput";
-import { AppImageMultipleInput } from "../../shared/components/AppImageMultipleInput";
+import { AppImageInput } from "../../packages/mochilita/nativewind/AppImageInput";
+import { AppImageMultipleInput } from "../../packages/mochilita/nativewind/AppImageMultipleInput";
 
 const iconSize = 50;
 const menuItems = [

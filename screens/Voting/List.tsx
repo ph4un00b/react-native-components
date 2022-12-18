@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import movies from "../../data/30-movies.json";
-import { MemoItem } from "../../shared/components/ListItem";
+import { MemoItem } from "../../packages/mochilita/nativewind/ListItem";
 
 const keyExtractor = (item: any) => item.id;
 

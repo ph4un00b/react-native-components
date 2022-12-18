@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
 import movies from "../../data/30-movies.json";
-import { MemoSwipableItem } from "../../shared/components/SwipableListItem.android";
+import { MemoSwipableItem } from "../../packages/mochilita/nativewind/SwipableListItem.android";
 import { Fontisto } from "@expo/vector-icons"
 const keyExtractor = (item: any) => item.id;
 

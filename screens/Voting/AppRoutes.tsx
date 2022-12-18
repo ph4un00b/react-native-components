@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { Route, Routes } from "react-router-native";
-import { AppBar } from "../../shared/components/AppBar";
+import { AppBar } from "../../packages/mochilita/nativewind/AppBar";
 import { ListingPage } from "../Indexes/Listing";
 import { MenuPage } from "../Indexes/Menu";
 import { LoginPage } from "../Login/Login";

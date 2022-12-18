@@ -12,7 +12,7 @@ import {
 import { RectButton, Swipeable } from "react-native-gesture-handler";
 import { colors } from "react-native-tailwindcss";
 import movies from "../../data/30-movies.json";
-import { MemoItem } from "../../shared/components/ListItem";
+import { MemoItem } from "../../packages/mochilita/nativewind/ListItem";
 
 const styles = StyleSheet.create({
   leftAction: {

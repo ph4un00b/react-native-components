@@ -1,5 +1,6 @@
 import { FlatList, View } from "react-native";
-import { MemoRowItem } from "../../shared/components/ListItem.android";
+import { MemoRowItem } from "../../packages/mochilita/nativewind/ListItem.android";
+// import { MemoRowItem } from "@phau/mochilita/nativewind";
 import movies from "../../data/30-movies.json";
 
 export function ListingPage() {

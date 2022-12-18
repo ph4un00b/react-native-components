@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@phau/probando": "*",
+    "@phau/mochilita": "*",
     "@expo/webpack-config": "^0.17.2",
     "@hookform/resolvers": "^2.9.10",
     "expo": "~47.0.8",

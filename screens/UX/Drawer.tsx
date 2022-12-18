@@ -1,5 +1,5 @@
 import { FlatList, View, Text, I18nManager } from "react-native";
-import { MemoRowItem } from "../../shared/components/ListItem.android";
+import { MemoRowItem } from "../../packages/mochilita/nativewind/ListItem.android";
 import movies from "../../data/30-movies.json";
 /** @see https://docs.swmansion.com/react-native-gesture-handler/docs/api/components/drawer-layout */
 import DrawerLayout from "react-native-gesture-handler/DrawerLayout";

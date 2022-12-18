@@ -1,12 +1,12 @@
 import { Button, ScrollView, Text, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
-import { AppInput } from "../../shared/components/AppInput";
+import { AppInput } from "../../packages/mochilita/nativewind/AppInput";
 import {
   /** @see https://icons.expo.fyi/ */
   AntDesign as AIcon,
   MaterialCommunityIcons as MIcon,
 } from "@expo/vector-icons";
-import { SubmitButton } from "../../shared/components/Button.submit";
+import { SubmitButton } from "../../packages/mochilita/nativewind/Button.submit";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Picker } from "@react-native-picker/picker";

@@ -1,7 +1,7 @@
 import { Button, FlatList, Text, View } from "react-native";
-import { AppIcon } from "../../shared/components/AppIcon";
+import { AppIcon } from "../../packages/mochilita/nativewind/AppIcon";
 import { color } from "react-native-tailwindcss";
-import { RowItem } from "../../shared/components/ListItem";
+import { RowItem } from "../../packages/mochilita/nativewind/ListItem";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 const iconSize = 50;
