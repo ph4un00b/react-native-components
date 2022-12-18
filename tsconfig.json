@@ -1,6 +1,14 @@
 {
   "extends": "expo/tsconfig.base",
   "exclude": ["node_modules"],
+  "references": [
+    {
+      "path": "./packages/ValidatorHelper/tsconfig.json"
+    },
+    {
+      "path": "./packages/probando"
+    }
+  ],
   "compilerOptions": {
     "strict": true,
     "types": ["nativewind/types"]

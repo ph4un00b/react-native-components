@@ -2,7 +2,14 @@
   "name": "test-expo",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "* install external on package": "npm install axios -w @phau/probando",
+  "** do not do this **": "cd packages/probando && npm install axios",
+  "** if you did this do -> **": "https://plainenglish.io/blog/monorepo-setup-with-npm-and-typescript#repairing",
+  "* Build a specific package from root": "npx tsc -b packages/probando",
+  "* all": "npx tsc -b -v -w -i",
+  "* see for ts packages": "https://www.typescriptlang.org/docs/handbook/module-resolution.html",
   "scripts": {
+    "packages": "tsc -b -v",
     "start": "expo start",
     "styles": "tailwindcss -i input.css --postcss postcss.config.js --watch",
     "android": "expo start --android",
@@ -10,6 +17,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@phau/probando": "*",
     "@expo/webpack-config": "^0.17.2",
     "@hookform/resolvers": "^2.9.10",
     "expo": "~47.0.8",
