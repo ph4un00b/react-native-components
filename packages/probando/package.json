@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "name": "@phau/probando",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ph4un00b/react-native-patterns.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ph4un00b/react-native-patterns/issues"
+  },
+  "homepage": "https://github.com/ph4un00b/react-native-patterns#readme"
+}
