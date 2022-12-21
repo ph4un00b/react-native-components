@@ -1,4 +1,4 @@
-import { Button, ScrollView, Text, View } from "react-native";
+import { Alert, Button, ScrollView, Text, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { AppInput } from "../../shared/components/AppInput";
 import {
@@ -12,6 +12,7 @@ import { z } from "zod";
 import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { color } from "react-native-tailwindcss";
+import { useSignIn } from "@clerk/clerk-expo";
 
 const Form = z.object({
   email: z.string().max(256).min(4).email(),
@@ -20,6 +21,7 @@ const Form = z.object({
 
 const Item: any = Picker.Item;
 export function LoginPage() {
+  const Auth = useSignIn();
   const [selectedLanguage, setSelectedLanguage] = useState();
 
   const {
@@ -29,7 +31,25 @@ export function LoginPage() {
   } = useForm({
     resolver: zodResolver(Form),
   });
-  const onSubmit = (data: any) => console.log(data);
+
+  async function onSubmit(data: any) {
+    if (!Auth.isLoaded) {
+      return;
+    }
+
+    try {
+      const completeSignIn = await Auth.signIn.create({
+        identifier: data.email,
+        password: data.password,
+      });
+
+      await Auth.setSession(completeSignIn.createdSessionId);
+    } catch (err) {
+      // @ts-ignore
+      Alert.alert("Error:> " + (err.errors ? err.errors[0].message : err));
+    }
+    // Alert.alert(JSON.stringify(data));
+  }
 
   return (
     <ScrollView className="flex flex-1 px-4">
