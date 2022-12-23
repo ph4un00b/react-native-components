@@ -28,7 +28,8 @@
     "expo-constants": "~14.0.2",
     "expo-image-picker": "~14.0.2",
     "expo-splash-screen": "~0.17.5",
-    "expo-linking": "~3.3.0"
+    "expo-linking": "~3.3.0",
+    "expo-dev-client": "~2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
