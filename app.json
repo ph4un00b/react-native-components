@@ -9,6 +9,8 @@
         }
       ]
     ],
+    "owner": "phau",
+    "scheme": "testexpo",
     "name": "test-expo",
     "slug": "test-expo",
     "version": "1.0.0",
@@ -33,7 +35,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.phau.testexpo"
     },
     "web": {
       "favicon": "./assets/favicon.png"

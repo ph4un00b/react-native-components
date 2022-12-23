@@ -13,3 +13,5 @@ generated/
 
 # macOS
 .DS_Store
+
+android/
