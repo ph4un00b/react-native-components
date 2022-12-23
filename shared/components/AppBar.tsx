@@ -55,6 +55,7 @@ export function AppBar() {
           </View>
           {/* TODO: automate links agregation */}
           <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/linking">linking</AppBarTab>
           <AppBarTab to="/native-image">image</AppBarTab>
           <AppBarTab to="/drawer">drawer</AppBarTab>
           <AppBarTab to="/listing">listing</AppBarTab>

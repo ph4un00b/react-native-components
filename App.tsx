@@ -15,6 +15,7 @@ import { SwipeListInsidePage } from "./screens/Voting/SwipableListInside";
 import { ClassSwipableListPage } from "./screens/Voting/ClassSwipableList";
 import { SwipeListPage } from "./screens/Voting/SwipeList";
 import { LoginPage } from "./screens/Login/Login";
+import { LinkingScreen } from "./screens/linking";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
            */}
           <Routes>
             <Route path="/" element={<MenuPage />} />
+            <Route path="/linking" element={<LinkingScreen />} />
             <Route path="/drawer" element={<DrawerPage />} />
             <Route path="/native-image" element={<NativeImagePage />} />
             <Route path="/listing" element={<ListingPage />} />
