@@ -1,4 +1,8 @@
-import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
+import {
+  AuthSessionResult,
+  makeRedirectUri,
+  useAuthRequest,
+} from "expo-auth-session";
 import Constants from "expo-constants";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
@@ -25,6 +29,7 @@ const discovery = {
 };
 
 export function GithubScreen() {
+  const mountedRef = React.useRef(true);
   const [profile, setProfile] = useState<{
     id: string;
     name: string;
@@ -60,64 +65,68 @@ export function GithubScreen() {
 
   React.useEffect(() => {
     console.log({ response });
-    if (response?.type == "success") {
-      //   # get temporary GitHub code...
-      const { code } = response.params;
-      code && console.log({ code });
-      code && Alert.alert(code);
+    if (response?.type != "success") return;
+    //   # get temporary GitHub code...
+    const { code } = response.params;
+    code && console.log({ code });
+    code && Alert.alert(code);
 
-      let tmpProfile: {
-        id: string;
-        name: string;
-        email: string | null;
-        image: string;
-      } = null!;
+    let tmpProfile: {
+      id: string;
+      name: string;
+      email: string | null;
+      image: string;
+    } = null!;
 
-      let aToken = "";
-      const params = new URLSearchParams({
-        client_id: "9f1a3556679112ca7ad5",
-        client_secret: env.GITHUB_SECRET,
-        code,
-      }).toString();
+    let aToken = "";
+    const params = new URLSearchParams({
+      client_id: "9f1a3556679112ca7ad5",
+      client_secret: env.GITHUB_SECRET,
+      code,
+    }).toString();
 
-      fetch(`https://github.com/login/oauth/access_token?${params}`, {
-        method: "POST",
-        headers: { Accept: "application/json" },
+    fetch(`https://github.com/login/oauth/access_token?${params}`, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+    })
+      .then((res) => jsonOrError(res, "@github-provider"))
+      .then(({ access_token, scope, token_type }) => {
+        aToken = access_token;
+        /** @see https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user */
+        return fetch("https://api.github.com/user", {
+          method: "GET",
+          headers: githubHeaders(aToken),
+        });
       })
-        .then((res) => jsonOrError(res, "@github-provider"))
-        .then(({ access_token, scope, token_type }) => {
-          aToken = access_token;
-          /** @see https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user */
-          return fetch("https://api.github.com/user", {
-            method: "GET",
-            headers: githubHeaders(aToken),
-          });
-        })
-        .then((res) => jsonOrError(res, "@github/user"))
-        .then((data: GithubProfile) => {
-          tmpProfile = {
-            id: data.id.toString(),
-            name: data.login ?? data.name,
-            email: data.email,
-            image: data.avatar_url,
-          };
-        })
-        .then(() => {
-          return fetch("https://api.github.com/user/emails", {
-            /** @see https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28 */
-            method: "GET",
-            headers: githubHeaders(aToken),
-          });
-        })
-        .then((res) => jsonOrError(res, "@github/emails"))
-        .then((data: GithubEmail[]) => {
-          setProfile({
-            ...tmpProfile,
-            email: (data.find((e) => e.primary) ?? data[0]).email,
-          });
-        })
-        .catch(console.error);
-    }
+      .then((res) => jsonOrError(res, "@github/user"))
+      .then((data: GithubProfile) => {
+        tmpProfile = {
+          id: data.id.toString(),
+          name: data.login ?? data.name,
+          email: data.email,
+          image: data.avatar_url,
+        };
+      })
+      .then(() => {
+        return fetch("https://api.github.com/user/emails", {
+          /** @see https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28 */
+          method: "GET",
+          headers: githubHeaders(aToken),
+        });
+      })
+      .then((res) => jsonOrError(res, "@github/emails"))
+      .then((data: GithubEmail[]) => {
+        if (!mountedRef.current) return;
+        setProfile({
+          ...tmpProfile,
+          email: (data.find((e) => e.primary) ?? data[0]).email,
+        });
+      })
+      .catch(console.error);
+
+    return () => {
+      mountedRef.current = false;
+    };
   }, [response]);
 
   return (
