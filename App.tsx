@@ -16,6 +16,7 @@ import { ClassSwipableListPage } from "./screens/Voting/ClassSwipableList";
 import { SwipeListPage } from "./screens/Voting/SwipeList";
 import { LoginPage } from "./screens/Login/Login";
 import { LinkingScreen } from "./screens/linking";
+import { GithubScreen } from "./screens/github";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
            */}
           <Routes>
             <Route path="/" element={<MenuPage />} />
+            <Route path="/github" element={<GithubScreen />} />
             <Route path="/linking" element={<LinkingScreen />} />
             <Route path="/drawer" element={<DrawerPage />} />
             <Route path="/native-image" element={<NativeImagePage />} />
