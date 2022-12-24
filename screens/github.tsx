@@ -1,10 +1,10 @@
-import * as React from "react";
-import * as WebBrowser from "expo-web-browser";
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
-import { Alert, Button, ScrollView, Text, View } from "react-native";
-import * as Linking from "expo-linking";
-import { useState } from "react";
 import Constants from "expo-constants";
+import * as Linking from "expo-linking";
+import * as WebBrowser from "expo-web-browser";
+import * as React from "react";
+import { useState } from "react";
+import { Alert, Button, ScrollView, Text, View } from "react-native";
 import { z } from "zod";
 
 const schema = z.object({
@@ -83,7 +83,7 @@ export function GithubScreen() {
           new URLSearchParams({
             client_id: "9f1a3556679112ca7ad5",
             client_secret: env.GITHUB_SECRET,
-            code: code,
+            code,
           }).toString(),
         {
           method: "POST",
@@ -145,7 +145,6 @@ export function GithubScreen() {
             ...tmpProfile,
             email: (data.find((e) => e.primary) ?? data[0]).email,
           });
-          return;
         })
         .catch(console.error);
     }
@@ -176,7 +175,7 @@ export function GithubScreen() {
 
 /** copied from @see https://github.com/nextauthjs/next-auth/blob/dcb601987bb050f540c137440514ad54728ed801/packages/core/src/providers/github.ts */
 /** @see [Get the authenticated user](https://docs.github.com/en/rest/users/users#get-the-authenticated-user) */
-export interface GithubProfile extends Record<string, any> {
+export interface GithubProfile extends Record<string, unknown> {
   login: string;
   id: number;
   node_id: string;
@@ -224,7 +223,7 @@ export interface GithubProfile extends Record<string, any> {
   };
 }
 
-interface GithubEmail extends Record<string, any> {
+interface GithubEmail extends Record<string, unknown> {
   email: string;
   primary: boolean;
   verified: boolean;

@@ -6,7 +6,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:react-hooks/recommended",
-    "plugin:react/recommended",
+    // "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     /** if problems you might use @see https://www.npmjs.com/package/@react-native-community/eslint-plugin */
     "universe/native",
