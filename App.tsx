@@ -1,22 +1,23 @@
+import { SafeAreaView } from "react-native";
 import "./generated/nativewind-output";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { NativeRouter, Route, Routes } from "react-router-native";
 /** ensure that appropriate event handlers are registered with React Native */
-import "react-native-gesture-handler";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native";
-import { AppBar } from "./shared/components/AppBar";
-import { MenuPage } from "./screens/Indexes/Menu";
-import { DrawerPage } from "./screens/UX/Drawer";
-import { NativeImagePage } from "./screens/Native/Image";
+// import "react-native-gesture-handler";
+
 import { ListingPage } from "./screens/Indexes/Listing";
+import { MenuPage } from "./screens/Indexes/Menu";
+import { LoginPage } from "./screens/Login/Login";
+import { NativeImagePage } from "./screens/Native/Image";
+import { DrawerPage } from "./screens/UX/Drawer";
+import { ClassSwipableListPage } from "./screens/Voting/ClassSwipableList";
 import { ListPage } from "./screens/Voting/List";
 import { SimpleSwipeListPage } from "./screens/Voting/SimpleSwipableList";
 import { SwipeListInsidePage } from "./screens/Voting/SwipableListInside";
-import { ClassSwipableListPage } from "./screens/Voting/ClassSwipableList";
 import { SwipeListPage } from "./screens/Voting/SwipeList";
-import { LoginPage } from "./screens/Login/Login";
-import { LinkingScreen } from "./screens/linking";
 import { GithubScreen } from "./screens/github";
+import { LinkingScreen } from "./screens/linking";
+import { AppBar } from "./shared/components/AppBar";
 
 export default function App() {
   return (

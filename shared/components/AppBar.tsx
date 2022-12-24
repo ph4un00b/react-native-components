@@ -1,16 +1,17 @@
-import { ScrollView, Switch, Text, View } from "react-native";
 import Constants from "expo-constants";
-import { Link, useLocation } from "react-router-native";
-import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { ScrollView, Switch, Text, View } from "react-native";
 import { color } from "react-native-tailwindcss";
-import { RowItem } from "./ListItem";
+import { Link, useLocation } from "react-router-native";
+
 import { AppSearch } from "./AppSearch";
+import { RowItem } from "./ListItem";
 
 type TabProps = { children: React.ReactNode; to: string };
 
 function AppBarTab({ children, to }: TabProps) {
-  console.log('chaging to', to)
+  console.log("chaging to", to);
   const { pathname } = useLocation();
   const style =
     pathname == to
@@ -83,8 +84,8 @@ export function AppBar() {
       <View>
         <RowItem
           imageUrl="https://placekitten.com/300/300"
-          itemTitle={"Ads"}
-          isSelected={true}
+          itemTitle="Ads"
+          isSelected
         >
           <Text className="text-slate-200">
             How to Create Apple TV Application with React Native

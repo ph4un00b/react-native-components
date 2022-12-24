@@ -124,7 +124,6 @@ export function GithubScreen() {
           };
           //   setProfile(profile);
           tmpProfile = githubProfile;
-          return;
         })
         .then((res) => {
           /** @see https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28 */
