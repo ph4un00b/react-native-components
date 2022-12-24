@@ -65,81 +65,51 @@ export function GithubScreen() {
       const { code } = response.params;
       code && console.log({ code });
       code && Alert.alert(code);
-      //   # ... and POST it back to GitHub
-      //   result = RestClient.post('https://github.com/login/oauth/access_token',
-      //                           {:client_id => CLIENT_ID,
-      //                            :client_secret => CLIENT_SECRET,
-      //                            :code => session_code},
-      //                            :accept => :json)
+
       let tmpProfile: {
         id: string;
         name: string;
         email: string | null;
         image: string;
       } = null!;
+
       let aToken = "";
-      fetch(
-        "https://github.com/login/oauth/access_token?" +
-          new URLSearchParams({
-            client_id: "9f1a3556679112ca7ad5",
-            client_secret: env.GITHUB_SECRET,
-            code,
-          }).toString(),
-        {
-          method: "POST",
-          headers: { Accept: "application/json" },
-        }
-      )
-        .then((res) => {
-          if (!res.ok) throw new Error("something went wrong @github-provider");
-          return res.json();
-        })
+      const params = new URLSearchParams({
+        client_id: "9f1a3556679112ca7ad5",
+        client_secret: env.GITHUB_SECRET,
+        code,
+      }).toString();
+
+      fetch(`https://github.com/login/oauth/access_token?${params}`, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+      })
+        .then((res) => jsonOrError(res, "@github-provider"))
         .then(({ access_token, scope, token_type }) => {
           aToken = access_token;
           /** @see https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user */
-          //   curl \
-          //     -H "Accept: application/vnd.github+json" \
-          //     -H "Authorization: Bearer <YOUR-TOKEN>"\
-          //     -H "X-GitHub-Api-Version: 2022-11-28" \
-          //     https://api.github.com/user
           return fetch("https://api.github.com/user", {
             method: "GET",
-            headers: {
-              Accept: "application/vnd.github+json",
-              Authorization: "Bearer " + aToken,
-              "X-GitHub-Api-Version": "2022-11-28",
-            },
+            headers: githubHeaders(aToken),
           });
         })
-        .then((res) => {
-          if (!res.ok) throw new Error("something went wrong @github/user");
-          return res.json();
-        })
+        .then((res) => jsonOrError(res, "@github/user"))
         .then((data: GithubProfile) => {
-          const githubProfile = {
+          tmpProfile = {
             id: data.id.toString(),
             name: data.login ?? data.name,
             email: data.email,
             image: data.avatar_url,
           };
-          //   setProfile(profile);
-          tmpProfile = githubProfile;
         })
-        .then((res) => {
-          /** @see https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28 */
+        .then(() => {
           return fetch("https://api.github.com/user/emails", {
+            /** @see https://docs.github.com/en/rest/users/emails?apiVersion=2022-11-28 */
             method: "GET",
-            headers: {
-              Accept: "application/vnd.github+json",
-              Authorization: "Bearer " + aToken,
-              "X-GitHub-Api-Version": "2022-11-28",
-            },
+            headers: githubHeaders(aToken),
           });
         })
-        .then((res) => {
-          if (!res.ok) throw new Error("something went wrong @github/emails");
-          return res.json();
-        })
+        .then((res) => jsonOrError(res, "@github/emails"))
         .then((data: GithubEmail[]) => {
           setProfile({
             ...tmpProfile,
@@ -158,7 +128,7 @@ export function GithubScreen() {
         </Text>
       )}
       {profile && (
-        <Text className="text-2xl text-yellow-300">
+        <Text className="text-2xl text-green-300">
           {JSON.stringify(profile, null, 2)}
         </Text>
       )}
@@ -228,4 +198,16 @@ interface GithubEmail extends Record<string, unknown> {
   primary: boolean;
   verified: boolean;
   visibility: "public" | "private";
+}
+function githubHeaders(aToken: string): HeadersInit {
+  return {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${aToken}`,
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+}
+
+function jsonOrError(res: Response, err: string) {
+  if (!res.ok) throw new Error("something went wrong " + err);
+  return res.json();
 }

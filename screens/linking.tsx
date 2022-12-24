@@ -1,8 +1,9 @@
-import { Alert, ScrollView, Text, View } from "react-native";
-import { SubmitButton } from "../shared/components/Button.submit";
 import * as Linking from "expo-linking";
 import { useEffect } from "react";
+import { Alert, ScrollView, Text, View } from "react-native";
 import { useNavigate } from "react-router-native";
+
+import { SubmitButton } from "../shared/components/Button.submit";
 
 const redirectUrl = Linking.createURL("/home", {
   queryParams: { hello: "world" },
@@ -54,7 +55,7 @@ export function LinkingScreen() {
     console.log("goingto:/" + path);
     path && navigate("/" + path);
     return () => console.log("bye");
-  }, [url]);
+  }, [navigate, url]);
 
   if (url) {
     const { hostname, path, queryParams } = Linking.parse(url);

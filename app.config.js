@@ -43,8 +43,16 @@ const baseConfig = {
         },
       ],
     ],
-    originalFullName: "@phau/testexpo2",
-    currentFullName: "@phau/testexpo2",
+    /**
+     * DEV_MODE
+     * "remove on expo-go mode": "$ npx expo start --android"
+     * on BUILD MODE
+     * - originalFullName
+     * - currentFullName
+     * are necessary for auth-session in build mode": "$ npx expo config --type public"
+     * */
+    // originalFullName: "@phau/testexpo2",
+    // currentFullName: "@phau/testexpo2",
     owner: "phau",
     scheme: "testexpo",
     name: "testexpo2",
@@ -86,11 +94,5 @@ const baseConfig = {
   },
 };
 export default () => {
-  // TODO: env.dev_mode nor env.build_mode worked, try to generate app.json or app.config.js
-  // if (env.DEV_MODE) {
-  //   // "** originalFullname && currentFullname remove on expo-go mode": "$ npx expo start --android",
-  //   return baseConfig;
-  // }
-  // "** originalFullname && currentFullname == @phau/testexpo2 are necessary for auth-session in build mode": "$ npx expo config --type public",
   return baseConfig;
 };
