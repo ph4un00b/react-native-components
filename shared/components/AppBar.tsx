@@ -49,9 +49,7 @@ function AuthStatus() {
       >
         <SubmitButton
           onPress={() => {
-            auth.logout();
-            navigate("/github");
-            // auth.signout(() => navigate("/"));
+            auth.logout(() => navigate("/github"));
           }}
         >
           Sign out

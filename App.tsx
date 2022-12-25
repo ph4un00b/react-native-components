@@ -41,9 +41,15 @@ type User = { token?: string; name?: string; image?: string };
 // type AuthContextType = [User, Dispatch<SetStateAction<User>>];
 type AuthContextType = {
   user: User | null;
-  login: ({ token }: { token: string }) => void;
-  saveUser: (user: User) => void;
-  logout: () => void;
+  login: ({
+    token,
+    callback,
+  }: {
+    token: string;
+    callback?: VoidFunction;
+  }) => void;
+  saveUser: (user: User, callback?: VoidFunction) => void;
+  logout: (callback?: VoidFunction) => void;
 };
 
 const AuthContext = createContext<AuthContextType>(null!);
@@ -58,7 +64,14 @@ export function useAuth() {
 function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  function login({ token }: { token: string }) {
+  function login({
+    token,
+    callback,
+  }: {
+    token: string;
+    callback?: VoidFunction;
+  }) {
+    console.log("💪");
     fetch("https://api.github.com/user", {
       method: "GET",
       headers: githubHeaders(token),
@@ -71,19 +84,23 @@ function AuthProvider({ children }: { children: ReactNode }) {
           image: data.avatar_url,
         });
       })
+      .then(() => {
+        callback?.();
+      })
       .catch(console.warn);
   }
 
-  function logout() {
+  function logout(callback?: VoidFunction) {
     setUser({});
     removeToken();
+    callback?.();
   }
 
   function saveUser(user: User) {
     setUser(user);
   }
 
-  const value = { user, login, logout, saveUser } as const;
+  const value = { user, login, logout, saveUser };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
@@ -182,18 +199,19 @@ function AppRestore({
       try {
         const token = await requestToken();
         if (!mountedRef.current || !token) return;
-        auth.login({ token });
+        auth.login({
+          token,
+          callback: () => {
+            dispatchAppIsReady(true);
+            console.log(">> app-ready!! 💃");
+          },
+        });
       } catch (error) {
         console.log(error);
-      } finally {
-        dispatchAppIsReady((p) => {
-          console.log(">> app-is-ready!");
-          return true;
-        });
       }
     }
     return () => {
-      console.log("<< bye - app-restore");
+      console.log("<< 🔚 - app-restore");
       mountedRef.current = false;
     };
   }, [auth, dispatchAppIsReady]);
