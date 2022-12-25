@@ -36,6 +36,8 @@ import { LinkingScreen } from "./screens/linking";
 import { AppBar } from "./shared/components/AppBar";
 import { requestToken } from "./utils/auth.store";
 
+import * as SplashScreen from "expo-splash-screen";
+
 type User = { token?: string; name?: string; image?: string };
 type AuthContextType = [User, Dispatch<SetStateAction<User>>];
 const AuthContext = createContext<AuthContextType>(null!);
@@ -66,13 +68,27 @@ export function useUser() {
   return value;
 }
 
+// Keep the splash screen visible while we fetch resources
+// todo: image @see https://docs.expo.dev/guides/splash-screens/
+SplashScreen.preventAutoHideAsync();
+
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    hideSplashScreen();
+
+    async function hideSplashScreen() {
+      if (appIsReady) await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
   return (
     <AuthProvider>
+      <AppRestore dispatchAppIsReady={setAppIsReady} />
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NativeRouter>
           <SafeAreaView className="flex items-center justify-center flex-1 bg-slate-800">
-            <AppRestore />
             <AppBar />
             {/**
              * All <Route>s and <Link>s inside a <Routes> are relative.
@@ -117,11 +133,17 @@ export default function App() {
   );
 }
 
-function AppRestore() {
-  const [, dispatchUser] = useUser();
+function AppRestore({
+  dispatchAppIsReady,
+}: {
+  dispatchAppIsReady: Dispatch<SetStateAction<boolean>>;
+}) {
+  const [user, dispatchUser] = useUser();
   const mountedRef = useRef(true);
 
   useEffect(() => {
+    console.log("restoring token!!");
+    // if (user.token) return;
     restoreToken();
 
     async function restoreToken() {
@@ -141,13 +163,18 @@ function AppRestore() {
             image: data.avatar_url,
           });
         })
-        .catch(console.error);
+        .catch(console.warn)
+        .finally(() => {
+          // Tell the application to render
+          dispatchAppIsReady(true);
+          console.log("app-is-ready!!");
+        });
     }
 
     return () => {
       mountedRef.current = false;
     };
-  }, [dispatchUser]);
+  }, [dispatchUser, dispatchAppIsReady]);
 
   return null;
 }
