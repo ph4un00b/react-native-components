@@ -59,6 +59,7 @@ export function Item({
 export function RowItem({
   itemId,
   imageUrl: itemUrl,
+  imageStyles,
   itemTitle,
   onPress,
   isSelected,
@@ -69,7 +70,6 @@ export function RowItem({
   titleColor,
   notSelectedTitleColor,
 }: ItemProps) {
-  const [vote, setVote] = useState(0);
   console.log("<item-row> " + itemId, isSelected);
 
   const bgSelectedDefault = "bg-purple-800";
@@ -102,7 +102,11 @@ export function RowItem({
 
       {itemUrl && (
         <Image
-          className="w-[100px] h-[100px] bg-black rounded-xl shadow-sm"
+          className={
+            imageStyles
+              ? imageStyles
+              : "w-[100px] h-[100px] bg-black rounded-xl shadow-sm"
+          }
           resizeMode="cover"
           fadeDuration={1000}
           blurRadius={3}

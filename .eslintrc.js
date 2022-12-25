@@ -36,5 +36,6 @@ module.exports = {
     eqeqeq: ["off", "smart"],
     "react/no-unescaped-entities": ["warn", { forbid: ["'"] }],
     "react-hooks/exhaustive-deps": "error",
+    "@typescript-eslint/no-non-null-assertion": "off",
   },
 };

@@ -5,6 +5,7 @@ import { areEqual } from "./ListItem.card";
 export type ItemProps = {
   itemId?: string;
   imageUrl?: string;
+  imageStyles?: string;
   itemTitle: string;
   onPress?: (event: GestureResponderEvent) => void;
   isSelected: boolean;

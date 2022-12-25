@@ -3,10 +3,12 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { ScrollView, Switch, Text, View } from "react-native";
 import { color } from "react-native-tailwindcss";
-import { Link, useLocation } from "react-router-native";
+import { Link, useLocation, useNavigate } from "react-router-native";
 
+import { useUser } from "../../App";
 import { AppSearch } from "./AppSearch";
-import { RowItem } from "./ListItem";
+import { SubmitButton } from "./Button.submit";
+import { MemoRowItem, RowItem } from "./ListItem";
 
 type TabProps = { children: React.ReactNode; to: string };
 
@@ -21,6 +23,39 @@ function AppBarTab({ children, to }: TabProps) {
     <Link to={to}>
       <Text className={style}>{children}</Text>
     </Link>
+  );
+}
+
+function AuthStatus() {
+  const [user] = useUser();
+  const navigate = useNavigate();
+
+  if (!user.token) {
+    return (
+      <Text className="text-xl text-center text-slate-200">
+        You are not logged in.
+      </Text>
+    );
+  }
+
+  // todo: enhance layout
+  return (
+    <>
+      <MemoRowItem
+        itemTitle={`Welcome ${user.name}!`}
+        imageUrl={user.image}
+        imageStyles="w-[50px] h-[50px] rounded-full shadow-sm items-center justify-center"
+        isSelected={false}
+      >
+        <SubmitButton
+          onPress={() => {
+            // auth.signout(() => navigate("/"));
+          }}
+        >
+          Sign out
+        </SubmitButton>
+      </MemoRowItem>
+    </>
   );
 }
 
@@ -56,6 +91,7 @@ export function AppBar() {
           </View>
           {/* TODO: automate links agregation */}
           <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/protected">protected</AppBarTab>
           <AppBarTab to="/github">github</AppBarTab>
           <AppBarTab to="/linking">linking</AppBarTab>
           <AppBarTab to="/native-image">image</AppBarTab>
@@ -92,6 +128,7 @@ export function AppBar() {
           </Text>
         </RowItem>
       </View>
+      <AuthStatus />
       <AppSearch />
     </View>
   );

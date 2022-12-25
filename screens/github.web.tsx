@@ -1,3 +1,6 @@
+// TODO: implement the web version, with it proper provider settings
+/** @see https://docs.expo.dev/guides/authentication/#github */
+/** @see https://github.com/settings/applications/2069300 */
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import Constants from "expo-constants";
 import * as Linking from "expo-linking";
@@ -6,8 +9,6 @@ import * as React from "react";
 import { useState } from "react";
 import { Alert, Button, ScrollView, Text, View } from "react-native";
 import { z } from "zod";
-
-import { useUser } from "../App";
 
 const schema = z.object({
   GITHUB_SECRET: z.string().min(1),
@@ -27,9 +28,7 @@ const discovery = {
 };
 
 export function GithubScreen() {
-  const [, dispatchUser] = useUser();
   const mountedRef = React.useRef(true);
-  const [token, setToken] = useState("");
   const [profile, setProfile] = useState<{
     id: string;
     name: string;
@@ -92,7 +91,6 @@ export function GithubScreen() {
       .then((res) => jsonOrError(res, "@github-provider"))
       .then(({ access_token, scope, token_type }) => {
         aToken = access_token;
-        console.log({ aToken });
         /** @see https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user */
         return fetch("https://api.github.com/user", {
           method: "GET",
@@ -122,19 +120,13 @@ export function GithubScreen() {
           ...tmpProfile,
           email: (data.find((e) => e.primary) ?? data[0]).email,
         });
-        setToken(aToken);
-        dispatchUser({
-          name: tmpProfile.name,
-          token: aToken,
-          image: tmpProfile.image,
-        });
       })
       .catch(console.error);
 
     return () => {
       mountedRef.current = false;
     };
-  }, [dispatchUser, response]);
+  }, [response]);
 
   return (
     <ScrollView>
@@ -143,19 +135,7 @@ export function GithubScreen() {
           link from callbacks: {url}
         </Text>
       )}
-      {profile && (
-        <Text className="text-2xl text-green-300">
-          {JSON.stringify(profile, null, 2)}
-        </Text>
-      )}
-      {token && <Text className="text-2xl text-red-500">{token}</Text>}
-      <Button
-        disabled={!request}
-        title="Login"
-        onPress={() => {
-          promptAsync({ useProxy: true });
-        }}
-      />
+      <Text className="text-2xl text-slate-100">hello from web! 🕸</Text>
     </ScrollView>
   );
 }
