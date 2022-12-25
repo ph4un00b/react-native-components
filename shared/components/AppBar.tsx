@@ -27,7 +27,7 @@ function AppBarTab({ children, to }: TabProps) {
 }
 
 function AuthStatus() {
-  const [user] = useUser();
+  const [user, dispatchUser] = useUser();
   const navigate = useNavigate();
 
   if (!user.token) {
@@ -49,6 +49,8 @@ function AuthStatus() {
       >
         <SubmitButton
           onPress={() => {
+            dispatchUser({});
+            navigate("/github");
             // auth.signout(() => navigate("/"));
           }}
         >
