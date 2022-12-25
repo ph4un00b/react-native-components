@@ -35,23 +35,63 @@ import { SwipeListPage } from "./screens/Voting/SwipeList";
 import { GithubScreen } from "./screens/github";
 import { LinkingScreen } from "./screens/linking";
 import { AppBar } from "./shared/components/AppBar";
-import { requestUser } from "./utils/auth.store";
+import { removeToken, requestToken } from "./utils/auth.store";
 
 type User = { token?: string; name?: string; image?: string };
-type AuthContextType = [User, Dispatch<SetStateAction<User>>];
+// type AuthContextType = [User, Dispatch<SetStateAction<User>>];
+type AuthContextType = {
+  user: User | null;
+  login: ({ token }: { token: string }) => void;
+  saveUser: (user: User) => void;
+  logout: () => void;
+};
+
 const AuthContext = createContext<AuthContextType>(null!);
 
+export function useAuth() {
+  const value = useContext(AuthContext);
+  if (value == null) throw new Error("Provider missing!");
+
+  return value;
+}
+
 function AuthProvider({ children }: { children: ReactNode }) {
-  return (
-    <AuthContext.Provider value={useState({})}>{children}</AuthContext.Provider>
-  );
+  const [user, setUser] = useState<User | null>(null);
+
+  function login({ token }: { token: string }) {
+    fetch("https://api.github.com/user", {
+      method: "GET",
+      headers: githubHeaders(token),
+    })
+      .then((res) => jsonOrError(res, "@github/user"))
+      .then((data: GithubProfile) => {
+        setUser({
+          name: data.login ?? data.name,
+          token,
+          image: data.avatar_url,
+        });
+      })
+      .catch(console.warn);
+  }
+
+  function logout() {
+    setUser({});
+    removeToken();
+  }
+
+  function saveUser(user: User) {
+    setUser(user);
+  }
+
+  const value = { user, login, logout, saveUser } as const;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 function RequireAuth({ children }: { children: JSX.Element }) {
-  const [user] = useUser();
+  const auth = useAuth();
   const location = useLocation();
 
-  if (!user.token) {
+  if (!auth.user?.token) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login, which is a nicer user experience
@@ -59,12 +99,6 @@ function RequireAuth({ children }: { children: JSX.Element }) {
     return <Navigate to="/github" state={{ from: location }} replace />;
   }
   return children;
-}
-
-export function useUser() {
-  const value = useContext(AuthContext);
-  if (value == null) throw new Error("Provider missing!");
-  return value;
 }
 
 // Keep the splash screen visible while we fetch resources
@@ -137,26 +171,32 @@ function AppRestore({
 }: {
   dispatchAppIsReady: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [user, dispatchUser] = useUser();
-
+  const mountedRef = useRef(true);
+  console.log("app-restore");
+  const auth = useAuth();
   useEffect(() => {
-    console.log("restoring user!!");
-    // if (user.token) return;
+    console.log("restoring user!!", auth.user);
     restoreUser();
 
     async function restoreUser() {
       try {
-        const user = await requestUser();
-        if (!user) return;
-        dispatchUser(user);
+        const token = await requestToken();
+        if (!mountedRef.current || !token) return;
+        auth.login({ token });
       } catch (error) {
         console.log(error);
       } finally {
-        dispatchAppIsReady(true);
-        console.log("app-is-ready!!");
+        dispatchAppIsReady((p) => {
+          console.log(">> app-is-ready!");
+          return true;
+        });
       }
     }
-  }, [dispatchUser, dispatchAppIsReady]);
+    return () => {
+      console.log("<< bye - app-restore");
+      mountedRef.current = false;
+    };
+  }, [auth, dispatchAppIsReady]);
 
   return null;
 }
@@ -167,4 +207,67 @@ function ProtectedScreen() {
       <Text className="text-2xl text-slate-200">Protected</Text>
     </View>
   );
+}
+
+function githubHeaders(aToken: string): HeadersInit {
+  return {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${aToken}`,
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+}
+
+function jsonOrError(res: Response, err: string) {
+  if (!res.ok) throw new Error("something went wrong " + err);
+  return res.json();
+}
+
+/** copied from @see https://github.com/nextauthjs/next-auth/blob/dcb601987bb050f540c137440514ad54728ed801/packages/core/src/providers/github.ts */
+/** @see https://docs.github.com/en/rest/users/users#get-the-authenticated-user */
+export interface GithubProfile extends Record<string, unknown> {
+  login: string;
+  id: number;
+  node_id: string;
+  avatar_url: string;
+  gravatar_id: string | null;
+  url: string;
+  html_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  starred_url: string;
+  subscriptions_url: string;
+  organizations_url: string;
+  repos_url: string;
+  events_url: string;
+  received_events_url: string;
+  type: string;
+  site_admin: boolean;
+  name: string | null;
+  company: string | null;
+  blog: string | null;
+  location: string | null;
+  email: string | null;
+  hireable: boolean | null;
+  bio: string | null;
+  twitter_username?: string | null;
+  public_repos: number;
+  public_gists: number;
+  followers: number;
+  following: number;
+  created_at: string;
+  updated_at: string;
+  private_gists?: number;
+  total_private_repos?: number;
+  owned_private_repos?: number;
+  disk_usage?: number;
+  suspended_at?: string | null;
+  collaborators?: number;
+  two_factor_authentication: boolean;
+  plan?: {
+    collaborators: number;
+    name: string;
+    space: number;
+    private_repos: number;
+  };
 }

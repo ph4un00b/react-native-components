@@ -8,6 +8,10 @@ export async function removeToken() {
   await remove({ key: "authToken" });
 }
 
+export async function requestToken() {
+  return request({ key: "authToken" });
+}
+
 export async function requestUser() {
   const token = await requestToken();
   if (!token) return;
@@ -27,9 +31,6 @@ export async function requestUser() {
     .catch(console.warn);
 }
 
-async function requestToken() {
-  return request({ key: "authToken" });
-}
 
 function githubHeaders(aToken: string): HeadersInit {
   return {

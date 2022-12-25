@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Alert, Button, ScrollView, Text, View } from "react-native";
 import { z } from "zod";
 
-import { useUser } from "../App";
+import { useAuth } from "../App";
 import { storeToken } from "../utils/auth.store";
 
 const schema = z.object({
@@ -29,7 +29,7 @@ const discovery = {
 };
 
 export function GithubScreen() {
-  const [, dispatchUser] = useUser();
+  const auth = useAuth();
   const mountedRef = React.useRef(true);
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState<{
@@ -125,7 +125,7 @@ export function GithubScreen() {
           email: (data.find((e) => e.primary) ?? data[0]).email,
         });
         setToken(aToken);
-        dispatchUser({
+        auth.saveUser({
           name: tmpProfile.name,
           token: aToken,
           image: tmpProfile.image,
@@ -137,7 +137,7 @@ export function GithubScreen() {
     return () => {
       mountedRef.current = false;
     };
-  }, [dispatchUser, response]);
+  }, [auth, response]);
 
   return (
     <ScrollView>

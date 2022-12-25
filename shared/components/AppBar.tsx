@@ -5,8 +5,7 @@ import { ScrollView, Switch, Text, View } from "react-native";
 import { color } from "react-native-tailwindcss";
 import { Link, useLocation, useNavigate } from "react-router-native";
 
-import { useUser } from "../../App";
-import { removeToken } from "../../utils/auth.store";
+import { useAuth } from "../../App";
 import { AppSearch } from "./AppSearch";
 import { SubmitButton } from "./Button.submit";
 import { MemoRowItem, RowItem } from "./ListItem";
@@ -28,10 +27,10 @@ function AppBarTab({ children, to }: TabProps) {
 }
 
 function AuthStatus() {
-  const [user, dispatchUser] = useUser();
+  const auth = useAuth();
   const navigate = useNavigate();
 
-  if (!user.token) {
+  if (!auth.user?.token) {
     return (
       <Text className="text-xl text-center text-slate-200">
         You are not logged in.
@@ -43,15 +42,14 @@ function AuthStatus() {
   return (
     <>
       <MemoRowItem
-        itemTitle={`Welcome ${user.name}!`}
-        imageUrl={user.image}
+        itemTitle={`Welcome ${auth.user.name}!`}
+        imageUrl={auth.user.image}
         imageStyles="w-[50px] h-[50px] rounded-full shadow-sm items-center justify-center"
         isSelected={false}
       >
         <SubmitButton
           onPress={() => {
-            removeToken();
-            dispatchUser({});
+            auth.logout();
             navigate("/github");
             // auth.signout(() => navigate("/"));
           }}
@@ -93,7 +91,7 @@ export function AppBar() {
               on/off
             </Text>
           </View>
-          {/* TODO: automate links agregation */}
+          {/* TODO: automate links aggregation */}
           <AppBarTab to="/">menu</AppBarTab>
           <AppBarTab to="/protected">protected</AppBarTab>
           <AppBarTab to="/github">github</AppBarTab>
