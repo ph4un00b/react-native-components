@@ -1,6 +1,7 @@
 import { makeRedirectUri, useAuthRequest } from "expo-auth-session";
 import Constants from "expo-constants";
 import * as Linking from "expo-linking";
+import * as SecureStore from "expo-secure-store";
 import * as WebBrowser from "expo-web-browser";
 import * as React from "react";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { Alert, Button, ScrollView, Text, View } from "react-native";
 import { z } from "zod";
 
 import { useUser } from "../App";
+import { storeToken } from "../utils/auth.store";
 
 const schema = z.object({
   GITHUB_SECRET: z.string().min(1),
@@ -128,6 +130,7 @@ export function GithubScreen() {
           token: aToken,
           image: tmpProfile.image,
         });
+        storeToken(aToken);
       })
       .catch(console.error);
 

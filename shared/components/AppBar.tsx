@@ -6,6 +6,7 @@ import { color } from "react-native-tailwindcss";
 import { Link, useLocation, useNavigate } from "react-router-native";
 
 import { useUser } from "../../App";
+import { removeToken } from "../../utils/auth.store";
 import { AppSearch } from "./AppSearch";
 import { SubmitButton } from "./Button.submit";
 import { MemoRowItem, RowItem } from "./ListItem";
@@ -49,6 +50,7 @@ function AuthStatus() {
       >
         <SubmitButton
           onPress={() => {
+            removeToken();
             dispatchUser({});
             navigate("/github");
             // auth.signout(() => navigate("/"));

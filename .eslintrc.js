@@ -33,6 +33,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint", "react-hooks"],
   rules: {
+    "no-return-await": "error",
     eqeqeq: ["off", "smart"],
     "react/no-unescaped-entities": ["warn", { forbid: ["'"] }],
     "react-hooks/exhaustive-deps": "error",
