@@ -198,7 +198,8 @@ function AppRestore({
     async function restoreUser() {
       try {
         const token = await requestToken();
-        if (!mountedRef.current || !token) return;
+        if (!mountedRef.current) return;
+        if (!token) return dispatchAppIsReady(true);
         auth.login({
           token,
           callback: () => {

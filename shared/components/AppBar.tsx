@@ -52,7 +52,7 @@ function AuthStatus() {
             auth.logout(() => navigate("/github"));
           }}
         >
-          Sign out
+          log out!
         </SubmitButton>
       </MemoRowItem>
     </>
