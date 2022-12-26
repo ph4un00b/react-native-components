@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import { SafeAreaView, Text, View } from "react-native";
-import "./generated/nativewind-output";
+import "./nativewind-output";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   NativeRouter,

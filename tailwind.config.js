@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /** @see https://www.nativewind.dev/guides/postcss */
 // const nativewind = require("nativewind/tailwind/css")
-const nativewind = require("nativewind/tailwind/native")
+const nativewind = require("nativewind/tailwind/native");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
