@@ -18,12 +18,14 @@ export function AppBar() {
 
   return (
     <View className="flex flex-col w-full">
-      <StatusBar style="light" />
-      <BarNavigation />
-      {isBarOn && <AppNotification />}
-      {isBarOn && <AdBlock />}
-      {isBarOn && <AuthStatus />}
-      {isBarOn && <AppSearch />}
+      <>
+        <StatusBar style="light" />
+        <BarNavigation />
+        {isBarOn && <AppNotification />}
+        {isBarOn && <AdBlock />}
+        {isBarOn && <AuthStatus />}
+        {isBarOn && <AppSearch />}
+      </>
     </View>
   );
 
@@ -42,8 +44,8 @@ export function AppBar() {
               trackColor={{ false: color.gray200, true: color.purple400 }}
               thumbColor={color.gray100}
               ios_backgroundColor={color.gray800}
-              onValueChange={() => setBarStatus((prev) => !prev)}
-              value={isBarOn}
+              onValueChange={() => setBarStatus(!isBarOn)}
+              value={isBarOn as boolean}
             />
             <Text className="pt-2 pl-1 pr-3 text-xl font-bold capitalize text-slate-200">
               on/off
