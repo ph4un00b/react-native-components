@@ -4,60 +4,13 @@ import React, { useState } from "react";
 import { ScrollView, Switch, Text, View } from "react-native";
 import { color } from "react-native-tailwindcss";
 import { Link, useLocation, useNavigate } from "react-router-native";
+import { useAuth } from "../../utils/auth";
 
-import { useAuth } from "../../App";
 import { AppSearch } from "./AppSearch";
 import { SubmitButton } from "./Button.submit";
 import { MemoRowItem, RowItem } from "./ListItem";
 
 type TabProps = { children: React.ReactNode; to: string };
-
-function AppBarTab({ children, to }: TabProps) {
-  // console.log("chaging to", to);
-  const { pathname } = useLocation();
-  const style =
-    pathname == to
-      ? "px-3 pt-2 text-xl font-bold capitalize text-slate-200"
-      : "px-3 pt-2 text-xl font-bold capitalize text-slate-400";
-  return (
-    <Link to={to}>
-      <Text className={style}>{children}</Text>
-    </Link>
-  );
-}
-
-function AuthStatus() {
-  const auth = useAuth();
-  const navigate = useNavigate();
-
-  if (!auth.user?.token) {
-    return (
-      <Text className="text-xl text-center text-slate-200">
-        You are not logged in.
-      </Text>
-    );
-  }
-
-  // todo: enhance layout
-  return (
-    <>
-      <MemoRowItem
-        itemTitle={`Welcome ${auth.user.name}!`}
-        imageUrl={auth.user.image}
-        imageStyles="w-[50px] h-[50px] rounded-full shadow-sm items-center justify-center"
-        isSelected={false}
-      >
-        <SubmitButton
-          onPress={() => {
-            auth.logout(() => navigate("/github"));
-          }}
-        >
-          log out!
-        </SubmitButton>
-      </MemoRowItem>
-    </>
-  );
-}
 
 export function AppBar() {
   const [switchVal, setSwitch] = useState(true);
@@ -128,8 +81,57 @@ export function AppBar() {
           </Text>
         </RowItem>
       </View>
+
       <AuthStatus />
+
       <AppSearch />
     </View>
+  );
+}
+
+function AppBarTab({ children, to }: TabProps) {
+  // console.log("chaging to", to);
+  const { pathname } = useLocation();
+  const style =
+    pathname == to
+      ? "px-3 pt-2 text-xl font-bold capitalize text-slate-200"
+      : "px-3 pt-2 text-xl font-bold capitalize text-slate-400";
+  return (
+    <Link to={to}>
+      <Text className={style}>{children}</Text>
+    </Link>
+  );
+}
+
+function AuthStatus() {
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  if (!auth.user?.token) {
+    return (
+      <Text className="text-xl text-center text-slate-200">
+        You are not logged in.
+      </Text>
+    );
+  }
+
+  // todo: enhance layout
+  return (
+    <>
+      <MemoRowItem
+        itemTitle={`Welcome ${auth.user.name}!`}
+        imageUrl={auth.user.image}
+        imageStyles="w-[50px] h-[50px] rounded-full shadow-sm items-center justify-center"
+        isSelected={false}
+      >
+        <SubmitButton
+          onPress={() => {
+            auth.logout(() => navigate("/github"));
+          }}
+        >
+          log out!
+        </SubmitButton>
+      </MemoRowItem>
+    </>
   );
 }
