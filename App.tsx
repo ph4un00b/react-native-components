@@ -1,4 +1,5 @@
 import * as SplashScreen from "expo-splash-screen";
+import { atom, useAtom } from "jotai";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import "./nativewind-output";
@@ -20,14 +21,21 @@ import { SwipeListPage } from "./screens/Voting/SwipeList";
 import { GithubScreen } from "./screens/github";
 import { LinkingScreen } from "./screens/linking";
 import { AppBar } from "./shared/components/AppBar";
-import { requestToken } from "./utils/auth.store";
 import { AuthProvider, RequireAuth, useAuth } from "./utils/auth";
+import { requestToken } from "./utils/auth.store";
 
 // Keep the splash screen visible while we fetch resources
 // todo: image @see https://docs.expo.dev/guides/splash-screens/
 SplashScreen.preventAutoHideAsync();
 
+const appBarAtom = atom(true);
+
+export function useBar() {
+  return useAtom(appBarAtom);
+}
+
 export default function App() {
+  const [isBarOn] = useBar();
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {

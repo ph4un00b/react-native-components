@@ -1,11 +1,12 @@
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, Switch, Text, View } from "react-native";
 import { color } from "react-native-tailwindcss";
 import { Link, useLocation, useNavigate } from "react-router-native";
-import { useAuth } from "../../utils/auth";
 
+import { useBar } from "../../App";
+import { useAuth } from "../../utils/auth";
 import { AppSearch } from "./AppSearch";
 import { SubmitButton } from "./Button.submit";
 import { MemoRowItem, RowItem } from "./ListItem";
@@ -13,15 +14,21 @@ import { MemoRowItem, RowItem } from "./ListItem";
 type TabProps = { children: React.ReactNode; to: string };
 
 export function AppBar() {
-  const [switchVal, setSwitch] = useState(true);
-
-  const toggleSwitch = () => {
-    setSwitch((prev) => !prev);
-  };
+  const [isBarOn, setBarStatus] = useBar();
 
   return (
     <View className="flex flex-col w-full">
       <StatusBar style="light" />
+      <BarNavigation />
+      {isBarOn && <AppNotification />}
+      {isBarOn && <AdBlock />}
+      {isBarOn && <AuthStatus />}
+      {isBarOn && <AppSearch />}
+    </View>
+  );
+
+  function BarNavigation() {
+    return (
       <View
         className="flex flex-row w-full bg-slate-600"
         style={{ paddingTop: Constants.statusBarHeight }}
@@ -35,8 +42,8 @@ export function AppBar() {
               trackColor={{ false: color.gray200, true: color.purple400 }}
               thumbColor={color.gray100}
               ios_backgroundColor={color.gray800}
-              onValueChange={toggleSwitch}
-              value={switchVal}
+              onValueChange={() => setBarStatus((prev) => !prev)}
+              value={isBarOn}
             />
             <Text className="pt-2 pl-1 pr-3 text-xl font-bold capitalize text-slate-200">
               on/off
@@ -56,35 +63,35 @@ export function AppBar() {
           <AppBarTab to="/swipe-inside">swipe-inside</AppBarTab>
           <AppBarTab to="/swipe-class">swipe-class</AppBarTab>
           <AppBarTab to="/swipe-outside">swipe-outside</AppBarTab>
-          <AppBarTab to="/test">test text to large</AppBarTab>
-          <AppBarTab to="/test">test text to large</AppBarTab>
-          <AppBarTab to="/test">test text to large</AppBarTab>
         </ScrollView>
       </View>
+    );
+  }
+}
 
-      <View>
-        <Text className="text-slate-200" numberOfLines={1}>
-          A very long and text let see what happens over here!, let's add a bit
-          more text
+function AppNotification() {
+  return (
+    <View>
+      <Text className="text-slate-200" numberOfLines={1}>
+        A very long and text let see what happens over here!, let's add a bit
+        more text
+      </Text>
+    </View>
+  );
+}
+
+function AdBlock() {
+  return (
+    <View>
+      <RowItem
+        imageUrl="https://placekitten.com/300/300"
+        itemTitle="Ads"
+        isSelected
+      >
+        <Text className="text-slate-200">
+          How to Create Apple TV Application with React Native
         </Text>
-      </View>
-
-      {/* ads */}
-      <View>
-        <RowItem
-          imageUrl="https://placekitten.com/300/300"
-          itemTitle="Ads"
-          isSelected
-        >
-          <Text className="text-slate-200">
-            How to Create Apple TV Application with React Native
-          </Text>
-        </RowItem>
-      </View>
-
-      <AuthStatus />
-
-      <AppSearch />
+      </RowItem>
     </View>
   );
 }
