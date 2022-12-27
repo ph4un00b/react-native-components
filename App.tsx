@@ -1,6 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SplashScreen from "expo-splash-screen";
-import { atom, useAtom } from "jotai";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { useAtom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import "./nativewind-output";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -25,17 +34,19 @@ import { AuthProvider, RequireAuth, useAuth } from "./utils/auth";
 import { requestToken } from "./utils/auth.store";
 
 // Keep the splash screen visible while we fetch resources
-// todo: image @see https://docs.expo.dev/guides/splash-screens/
+// todo: image
+/** @see https://docs.expo.dev/guides/splash-screens/ */
 SplashScreen.preventAutoHideAsync();
 
-const appBarAtom = atom(true);
+/** @see https://github.com/pmndrs/jotai/blob/main/docs/utils/atom-with-storage.mdx */
+const storage = createJSONStorage(() => AsyncStorage);
+const appBarAtom = atomWithStorage("app-bar", true, storage);
 
 export function useBar() {
   return useAtom(appBarAtom);
 }
 
 export default function App() {
-  const [isBarOn] = useBar();
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
@@ -52,7 +63,9 @@ export default function App() {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <NativeRouter>
           <SafeAreaView className="flex items-center justify-center flex-1 bg-slate-800">
-            <AppBar />
+            <Suspense fallback={<></>}>
+              <AppBar />
+            </Suspense>
             {/**
              * All <Route>s and <Link>s inside a <Routes> are relative.
              *  This leads to leaner and more predictable code in <Route path>
