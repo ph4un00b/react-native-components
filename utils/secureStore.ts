@@ -1,7 +1,9 @@
 /**
  * max 2048 bytes
- *  Please note that for iOS standalone apps, data stored with expo-secure-store can persist across app installs.
+ * Please note that for iOS standalone apps, `
+ * data stored with expo-secure-store can persist across app installs.
  * @see https://docs.expo.dev/versions/latest/sdk/securestore/
+ * @description only for android > v5
  */
 import * as SecureStore from "expo-secure-store";
 

@@ -53,6 +53,7 @@ export function AppBar() {
           </View>
           {/* TODO: automate links aggregation */}
           <AppBarTab to="/">menu</AppBarTab>
+          <AppBarTab to="/skia-declarative">skia</AppBarTab>
           <AppBarTab to="/protected">protected</AppBarTab>
           <AppBarTab to="/github">github</AppBarTab>
           <AppBarTab to="/linking">linking</AppBarTab>

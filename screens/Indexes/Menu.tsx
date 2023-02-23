@@ -10,7 +10,8 @@ import { removeToken } from "../../utils/auth.store";
 const iconSize = 50;
 const menuItems = [
   {
-    title: "item 1",
+    itemUri: "/skia-declarative",
+    title: "skia-declarative",
     icon: {
       element: (
         <AppIcon size={iconSize} bgColor="bg-pink-500">
@@ -49,6 +50,7 @@ export function MenuPage() {
           keyExtractor={(item) => item.title}
           renderItem={({ item }) => (
             <RowItem
+              // onPress={() => item.itemUri && navigate(item.itemUri)}
               notSelectedColor="bg-slate-700"
               notSelectedTitleColor="text-slate-200"
               icon={item.icon.element}

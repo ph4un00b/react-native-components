@@ -1,6 +1,7 @@
 import { FlatList, View } from "react-native";
-import { MemoRowItem } from "../../shared/components/ListItem.android";
+
 import movies from "../../data/30-movies.json";
+import { MemoRowItem } from "../../shared/components/ListItem.android";
 
 export function ListingPage() {
   return (

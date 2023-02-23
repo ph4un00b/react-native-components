@@ -17,6 +17,7 @@ import { NativeRouter, Route, Routes } from "react-router-native";
 /** ensure that appropriate event handlers are registered with React Native */
 // import "react-native-gesture-handler";
 
+import { SkiaCanvas } from "./screens/Animations/declarative.skia";
 import { ListingPage } from "./screens/Indexes/Listing";
 import { MenuPage } from "./screens/Indexes/Menu";
 import { LoginPage } from "./screens/Login/Login";
@@ -82,6 +83,7 @@ export default function App() {
              */}
             <Routes>
               <Route path="/" element={<MenuPage />} />
+              <Route path="/skia-declarative" element={<SkiaCanvas />} />
               <Route
                 path="/protected"
                 element={

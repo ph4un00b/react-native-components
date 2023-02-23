@@ -1,11 +1,6 @@
-import { I18nManager, Text, TouchableOpacity, View } from "react-native";
-import {
-  MaterialCommunityIcons,
-  Fontisto,
-  MaterialIcons,
-  Feather,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather } from "@expo/vector-icons";
 import { useState } from "react";
+import { I18nManager, Text, TouchableOpacity, View } from "react-native";
 import { color } from "react-native-tailwindcss";
 export function AppSearch() {
   const [allItems, setAllItems] = useState("all items");
