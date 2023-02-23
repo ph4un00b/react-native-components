@@ -1,0 +1,3 @@
+- `npm i`
+- `npx expo prebuild`
+- `npx expo run:android`
